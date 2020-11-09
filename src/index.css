@@ -92,6 +92,13 @@ textarea,
 select {
   font: inherit;
 }
+input:focus,
+button:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border: none;
+}
 
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {

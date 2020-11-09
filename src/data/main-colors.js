@@ -7,6 +7,7 @@ window.colors = {
     // app colors
     ///////////////////////////////
     "app__lightgray": "#d4d2d2",    
+    "app__lightgray--hover": "#efefef",    
     "app__rateStarColor": "#ffd700",    
 
 
