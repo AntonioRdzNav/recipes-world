@@ -18,11 +18,11 @@ import './index.css';
 // })
 //==============================================================================
 
-import DefaultLayout from "./components/DefaultLayout/index.jsx"
+import DefaultLayout from "./reusableComponents/DefaultLayout/index.jsx"
 
-import Discover from "./components/Discover/index.jsx"
-import RecipeView from "./components/RecipeView/index.jsx"
-import Publish from "./components/Publish/index.jsx"
+import Discover from "./domainComponents/Discover/index.jsx"
+import RecipeView from "./domainComponents/RecipeView/index.jsx"
+import Publish from "./domainComponents/Publish/index.jsx"
 
 //==============================================================================
 

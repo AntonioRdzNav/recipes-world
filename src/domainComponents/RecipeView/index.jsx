@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 //==============================================================================
+import RecipeComment from "../../reusableComponents/Comment/index.jsx"
+
 import {
 	RecipeView,
 	RecipeMainInformation,
@@ -10,6 +12,7 @@ import {
 	RecipeDescription,
 	RecipeSteps,
 	Step,
+    RecipeComments,
 } from "./style"
 //==============================================================================
 
@@ -42,10 +45,16 @@ function _RecipeView() {
 					This is step 1
 				</Step>
 				<Step>
-
 					This is step 2
 				</Step>
 			</RecipeSteps>
+			<RecipeComments>
+                <RecipeComment 
+                    authorAvatar="https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI"
+                    authorName="Antonio Rodriguez"
+                    commentText="Really tasty, but I would say that the chilli used may be wrong."
+                />
+			</RecipeComments>
     </RecipeView>
   );
 }

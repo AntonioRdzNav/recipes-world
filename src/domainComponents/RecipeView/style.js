@@ -17,11 +17,11 @@ export const RecipeView = styled.div`
 
 export const RecipeMainInformation = styled.div`
     background-color: ${() => window.colors["app__lightgray"]};
-    padding: 20px;
+    padding: 20px 40px;
     padding-bottom: 0px;
     /* overflow */
     position: absolute;
-    width: 40%;
+    width: 30%;
     top: 0px;
     left: 0px;
     height: calc(100vh - 60px);
@@ -32,7 +32,7 @@ export const RecipeMainInformation = styled.div`
     align-items: flex-start;    
 `
 export const RecipeImage = styled.img`
-    width: 80%;
+    width: 100%;
     height: auto;
     margin: 0 auto;
     margin-bottom: 30px;
@@ -49,15 +49,28 @@ export const RecipeDescription = styled.div`
     font-weight: 400;
 `
 export const RecipeSteps = styled.ol`
-    padding: 10px 30px;
+    padding: 20px 40px;
     /* overflow */
     position: absolute;
-    width: 60%;
+    width: 40%;
     top: 0px;
-    right: 0px;
+    left: 30%;
     height: calc(100vh - 60px);
+    overflow-y: scroll;
 `
 export const Step = styled.li`
     margin-bottom: 20px;
     list-style: decimal;
+    font-size: 15px;
+`
+export const RecipeComments = styled.div`
+    padding: 20px 40px;
+    background-color: ${() => window.colors["app__lightgray"]};
+    /* overflow */
+    position: absolute;
+    width: 30%;
+    top: 0px;
+    right: 0px;
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
 `
