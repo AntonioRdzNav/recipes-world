@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 //==============================================================================
-import RecipeComment from "../../reusableComponents/Comment/index.jsx"
+import RecipeComment from "../../reusable/Comment/index.jsx"
 
 import {
 	RecipeView,

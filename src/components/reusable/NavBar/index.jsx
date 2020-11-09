@@ -9,7 +9,7 @@ import {
     NavBarLink,
  } from "./style.js";
 
-import { DISCOVER__ROUTE_PATH, PUBLISH__ROUTE_PATH } from "../../data/urls"
+import { DISCOVER__ROUTE_PATH, PUBLISH__ROUTE_PATH } from "../../../data/urls"
 //==============================================================================
 
 function _NavBar() {
