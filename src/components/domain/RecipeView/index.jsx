@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 //==============================================================================
 import RecipeComment from "../../reusable/Comment/index.jsx"
+import Input from "../../reusable/Input/index"
+import Button from "../../reusable/Button/index"
 
 import {
 	RecipeView,
@@ -19,6 +21,7 @@ import {
 function _RecipeView() {
 
 	const [recipeRating, setRecipeRating] = useState(0);
+	const [newComment, setNewComment] = useState("");
 
   const ratingChanged = (newRating) => {
     console.log(newRating);
@@ -49,11 +52,35 @@ function _RecipeView() {
 				</Step>
 			</RecipeSteps>
 			<RecipeComments>
-                <RecipeComment 
-                    authorAvatar="https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI"
-                    authorName="Antonio Rodriguez"
-                    commentText="Really tasty, but I would say that the chilli used may be wrong."
-                />
+				<Input 
+						label="Write a new comment..."
+						placeholder="Comment"
+						onChange={(e) => setNewComment(e.target.value)}
+						value={newComment}
+						style={{ background:"white", marginBottom:5 }}
+				/>
+				<Button 
+					type="warning"
+					onClick={() => {}}
+					text="Create Comment"
+					style={{ width:"100%", marginBottom:30 }}				
+				/>
+
+				<RecipeComment 
+						authorAvatar="https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI"
+						authorName="Antonio Rodriguez"
+						commentText="Really tasty, but I would say that the chilli used may be wrong."
+				/>
+				<RecipeComment 
+						authorAvatar="https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI"
+						authorName="Antonio Rodriguez"
+						commentText="Really tasty, but I would say that the chilli used may be wrong."
+				/>
+				<RecipeComment 
+						authorAvatar="https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI"
+						authorName="Antonio Rodriguez"
+						commentText="Really tasty, but I would say that the chilli used may be wrong."
+				/>
 			</RecipeComments>
     </RecipeView>
   );

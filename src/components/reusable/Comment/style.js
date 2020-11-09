@@ -4,8 +4,9 @@ import styled from 'styled-components'
 export const CommentContainer = styled.div`
     width: 100%;
     border-radius: 5px;
-    padding: 15px;
+    padding: 5px 15px;
     background-color: white;
+    margin-bottom: 15px;
     /* flex */
     display: flex;
     flex-direction: column;
@@ -21,7 +22,7 @@ export const CommentAuthorData = styled.div`
     align-items: center;  
 `
 export const CommentAuthorAvatar = styled.img`
-    width: 40px;
+    width: 30px;
     height: auto;
     border-radius: 50%;
     margin-right: 10px;
