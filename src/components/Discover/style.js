@@ -1,4 +1,4 @@
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 
 
 export const Discover = styled.div`
@@ -62,8 +62,13 @@ export const RecipeImage = styled.img`
 `
 
 export const RecipeName = styled.div`
+    /* truncate text */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    
 `
 
 export const RecipeDescription = styled.div`
     font-weight: 300;
+    align-self: flex-start;
 `

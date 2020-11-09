@@ -1,5 +1,6 @@
 //==============================================================================
 import React from "react";
+import { useHistory } from 'react-router-dom';
 import ReactStars from "react-rating-stars-component";
 //==============================================================================
 import {
@@ -15,9 +16,7 @@ import {
 
 function _Discover() {
 
-  // const ratingChanged = (newRating) => {
-  //   console.log(newRating);
-  // };
+	const history = useHistory();
     
   return (
     <Discover>
@@ -26,10 +25,10 @@ function _Discover() {
       </Filters>
       <Recipes>
 
-        <RecipeContainer>
+        <RecipeContainer onClick={() => history.push(`/recipe/${"pozole"}`)}>
           <RecipeImage src="https://saboryestilo.com.mx/wp-content/uploads/2019/08/como-preparar-pozole-rojo-1-1200x720.jpg" alt="Recipe Image"/>
-          <RecipeName> Recipe Name </RecipeName>
-          <RecipeDescription> This is a description </RecipeDescription>
+          <RecipeName> Pozole Rojo </RecipeName>
+          <RecipeDescription> This is a recipe to cook Pozole Rojo, the steps are detailed here:  </RecipeDescription>
           <ReactStars
             count={5}
             value={4.5}

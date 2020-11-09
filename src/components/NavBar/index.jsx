@@ -9,7 +9,7 @@ import {
     NavBarLink,
  } from "./style.js";
 
-import { DISCOVER_URL, PUBLISH_URL } from "../../data/urls"
+import { DISCOVER__ROUTE_PATH, PUBLISH__ROUTE_PATH } from "../../data/urls"
 //==============================================================================
 
 function _NavBar() {
@@ -28,11 +28,11 @@ function _NavBar() {
 				</Link>                                                
 			</Home>
 			
-			<NavBarLink activeTab={matchedUrl === DISCOVER_URL}>
-				<Link to={DISCOVER_URL}>Discover</Link>
+			<NavBarLink activeTab={matchedUrl === DISCOVER__ROUTE_PATH}>
+				<Link to={DISCOVER__ROUTE_PATH}>Discover</Link>
 			</NavBarLink>
-			<NavBarLink activeTab={matchedUrl === PUBLISH_URL}>
-				<Link to={PUBLISH_URL}>Publish</Link>
+			<NavBarLink activeTab={matchedUrl === PUBLISH__ROUTE_PATH}>
+				<Link to={PUBLISH__ROUTE_PATH}>Publish</Link>
 			</NavBarLink>
 
 		</LinksContainer>

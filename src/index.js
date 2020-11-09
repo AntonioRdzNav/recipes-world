@@ -19,10 +19,18 @@ import './index.css';
 //==============================================================================
 
 import DefaultLayout from "./components/DefaultLayout/index.jsx"
+
 import Discover from "./components/Discover/index.jsx"
+import RecipeView from "./components/RecipeView/index.jsx"
 import Publish from "./components/Publish/index.jsx"
 
-import { DISCOVER_URL, PUBLISH_URL } from "./data/urls"
+//==============================================================================
+
+import { 
+    DISCOVER__ROUTE_PATH, 
+    RECIPE_VIEW__ROUTE_PATH,
+    PUBLISH__ROUTE_PATH,
+} from "./data/urls"
 
 // init [window.colors] global variable
 import "./data/main-colors";
@@ -48,9 +56,10 @@ ReactDOM.render(
 
     <Router>            
         <Switch>                                   
-          <RouteWithLayout exact path={DISCOVER_URL} component={Discover} layout={DefaultLayout}/>                                  
-          <RouteWithLayout exact path={PUBLISH_URL} component={Publish} layout={DefaultLayout}/>                                  
-          <Redirect path="*" to={DISCOVER_URL} />                   
+          <RouteWithLayout exact path={DISCOVER__ROUTE_PATH} component={Discover} layout={DefaultLayout}/>                                  
+          <RouteWithLayout exact path={RECIPE_VIEW__ROUTE_PATH} component={RecipeView} layout={DefaultLayout}/>                                  
+          <RouteWithLayout exact path={PUBLISH__ROUTE_PATH} component={Publish} layout={DefaultLayout}/>                                  
+          <Redirect path="*" to={DISCOVER__ROUTE_PATH} />                   
       </Switch>
     </Router>  
 
