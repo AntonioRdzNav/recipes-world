@@ -7,7 +7,6 @@ import {
     Switch,
     Redirect
 } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 // import firebase from "firebase/app"
@@ -19,12 +18,14 @@ import './index.css';
 // })
 //==============================================================================
 
-import DefaultLayout from "./components/DefaultLayout"
-import Discover from "./components/Discover"
-import Publish from "./components/Publish"
+import DefaultLayout from "./components/DefaultLayout/index.jsx"
+import Discover from "./components/Discover/index.jsx"
+import Publish from "./components/Publish/index.jsx"
 
 import { DISCOVER_URL, PUBLISH_URL } from "./data/urls"
 
+// init [window.colors] global variable
+import "./data/main-colors";
 //==============================================================================
 
 

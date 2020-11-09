@@ -3,11 +3,11 @@ import React from "react";
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 //==============================================================================
-import NavBar from "./NavBar";
+import NavBar from "../NavBar/index.jsx";
 
 //==============================================================================
 
-function DefaultLayout (props) {
+function _DefaultLayout (props) {
 
     return (                         
         <>
@@ -20,4 +20,4 @@ function DefaultLayout (props) {
     )
 }
 
-export default DefaultLayout;
+export default _DefaultLayout;
