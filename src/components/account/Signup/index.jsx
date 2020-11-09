@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import Input from "../../reusable/Input/index.jsx";
 import Button from "../../reusable/Button/index.jsx";
 
+import { isAnyEmpty, validateEmail } from "../../../utils/Helpers"
+
 import {
     AccountPage,
     AccountContainer,
@@ -26,6 +28,21 @@ function _Signup() {
 	const [password, setPassword] = useState("");
 	const [isInputMissing, setIsInputMissing] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+
+    const Signup = () => {
+        if(isAnyEmpty(name, email, password) || !validateEmail(email)) {
+            setIsInputMissing(true);
+            return;
+        }
+        setIsInputMissing(false);
+        setIsLoading(true);
+        // signup
+        setName("");
+        setEmail("");
+        setPassword("");
+        setIsLoading(false);
+        // redirect to another url
+    }    
     
   return (
     <AccountPage>
@@ -46,6 +63,7 @@ function _Signup() {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 checkForMissingField={isInputMissing}
+                error={isInputMissing && !validateEmail(email)}
                 isLoading={isLoading}
             />
             <Input 
@@ -62,7 +80,7 @@ function _Signup() {
             </AccountLink>                      
             <Button 
                 type="info"
-                onClick={() => {}}
+                onClick={Signup}
                 isLoading={isLoading}
                 text="Signup"
                 style={{ width:"100%", padding:"10px 0", fontSize:16, marginTop:30 }}

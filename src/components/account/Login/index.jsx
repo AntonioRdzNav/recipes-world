@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import Input from "../../reusable/Input/index.jsx";
 import Button from "../../reusable/Button/index.jsx";
 
+import { isAnyEmpty, validateEmail } from "../../../utils/Helpers"
+
 import {
     AccountPage,
     AccountContainer,
@@ -25,6 +27,20 @@ function _Login() {
 	const [password, setPassword] = useState("");
 	const [isInputMissing, setIsInputMissing] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+
+    const Login = () => {
+        if(isAnyEmpty(email, password) || !validateEmail(email)) {
+            setIsInputMissing(true);
+            return;
+        }
+        setIsInputMissing(false);
+        setIsLoading(true);
+        // login
+        setEmail("");
+        setPassword("");
+        setIsLoading(false);
+        // redirect to another url
+    }       
     
   return (
     <AccountPage>
@@ -37,6 +53,7 @@ function _Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 checkForMissingField={isInputMissing}
+                error={isInputMissing && !validateEmail(email)}
                 isLoading={isLoading}
             />
             <Input 
@@ -53,7 +70,7 @@ function _Login() {
             </AccountLink>
             <Button 
                 type="info"
-                onClick={() => {}}
+                onClick={Login}
                 isLoading={isLoading}
                 text="Login"
                 style={{ width:"100%", padding:"10px 0", fontSize:16, marginTop:30 }}
