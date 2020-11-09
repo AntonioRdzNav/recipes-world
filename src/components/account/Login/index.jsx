@@ -32,21 +32,21 @@ function _Login() {
             <AccountTitle> Login! </AccountTitle>
             <Input 
                 label="Email"
-								type="email"
+                type="email"
                 required={true}
-								onChange={(e) => setEmail(e.target.value)}
-								value={email}
-								checkForMissingField={isInputMissing}
-								isLoading={isLoading}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                checkForMissingField={isInputMissing}
+                isLoading={isLoading}
             />
             <Input 
                 label="Password"
                 type="password"
                 required={true}
-								onChange={(e) => setPassword(e.target.value)}
-								value={password}
-								checkForMissingField={isInputMissing}
-								isLoading={isLoading}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                checkForMissingField={isInputMissing}
+                isLoading={isLoading}
             />
             <AccountLink onClick={() => history.push(SIGNUP__ROUTE_PATH)}> 
                 Does not have an account yet? 
