@@ -48,6 +48,27 @@ export const RecipeName = styled.div`
 export const RecipeDescription = styled.div`
     font-weight: 400;
 `
+export const RecipeAuthorData = styled.div`
+    margin-top: 40px;
+    width: 100%;
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;  
+`
+export const RecipeAuthorAvatar = styled.img`
+    width: 30px;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 10px;
+`
+export const RecipeAuthorUsername = styled.div`
+    /* truncate text */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`
 export const RecipeSteps = styled.ol`
     padding: 20px 40px;
     /* overflow */

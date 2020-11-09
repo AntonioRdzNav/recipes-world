@@ -13,6 +13,9 @@ import {
 	RecipeName,
 	RecipeDescription,
 	RecipeSteps,
+    RecipeAuthorData,
+    RecipeAuthorAvatar,
+    RecipeAuthorUsername,
 	Step,
     RecipeComments,
 } from "./style"
@@ -42,6 +45,11 @@ function _RecipeView() {
 					activeColor={window.colors["app__rateStarColor"]}
 					onChange={ratingChanged}
 				/>  
+                <RecipeAuthorData>
+                    <span style={{ marginRight:20, fontWeight:800 }}>Author: </span>
+                    <RecipeAuthorAvatar src="https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI" alt="Author Avatar"/>
+                    <RecipeAuthorUsername> Antonio Rodriguez </RecipeAuthorUsername>
+                </RecipeAuthorData>
 			</RecipeMainInformation>
 			<RecipeSteps>
 				<Step>
