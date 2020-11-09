@@ -1,6 +1,9 @@
 //==============================================================================
 import React from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
+// import firebase from "firebase/app"
+// import "firebase/auth"
+// import { useAuthState } from "react-firebase-hooks/auth"
 //==============================================================================
 import { 
 	NavBar,
@@ -22,15 +25,17 @@ import {
 } from "../../../data/urls"
 //==============================================================================
 
+// const auth = firebase.auth()
+
 function _NavBar() {
 
+    // const [user] = useAuthState(auth);
 	const match = useRouteMatch();
 	const history = useHistory();
 
 	const matchedUrl = match.url;
 	const isInAccountUrl = matchedUrl===LOGIN__ROUTE_PATH || matchedUrl===SIGNUP__ROUTE_PATH;
 
-	const loggedIn = false;
 	const userAvatar = "https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI";
 	const userName = "Antonio Rodriguez"
 
@@ -54,14 +59,14 @@ function _NavBar() {
 
 		</LinksContainer>
 
-		{!loggedIn && !isInAccountUrl && <Button 
+		{/* {!user && !isInAccountUrl && <Button 
 			type="white"
 			onClick={() => history.push(LOGIN__ROUTE_PATH)}
 			text="Login"
 			style={{ marginRight:20 }}
 		/>}
 
-		{loggedIn && <ReactMenu 
+		{user && <ReactMenu 
 			label={
 			<UserData>
 				<UserAvatar src={userAvatar} alt="User Avatar"/>
@@ -70,7 +75,7 @@ function _NavBar() {
 			}
 			options={menuOptions}
 			widthMenu="230px"
-		/>}
+		/>} */}
 
 	</NavBar>	  
   );

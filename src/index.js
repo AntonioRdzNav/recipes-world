@@ -9,13 +9,10 @@ import {
 } from "react-router-dom";
 import './index.css';
 
-// import firebase from "firebase/app"
-// import "firebase/firestore"
-// import "firebase/auth"
+import firebase from "firebase/app"
+import "firebase/firestore"
+import "firebase/auth"
 
-// firebase.initializeApp({
-
-// })
 //==============================================================================
 
 import DefaultLayout from "./components/reusable/DefaultLayout/index.jsx"
@@ -27,8 +24,6 @@ import Publish from "./components/domain/Publish/index.jsx"
 import Login from "./components/account/Login/index.jsx"
 import Signup from "./components/account/Signup/index.jsx"
 
-//==============================================================================
-
 import { 
     DISCOVER__ROUTE_PATH, 
     RECIPE_VIEW__ROUTE_PATH,
@@ -39,6 +34,28 @@ import {
 
 // init [window.colors] global variable
 import "./data/main-colors";
+
+//==============================================================================
+
+let firebaseConfig = {
+  apiKey: "AIzaSyBmC7VKtY9myD_AwKRyWVrcaa60smoUm8o",
+  authDomain: "recipes-world-1234-training.firebaseapp.com",
+  databaseURL: "https://recipes-world-1234-training.firebaseio.com",
+  projectId: "recipes-world-1234-training",
+  storageBucket: "recipes-world-1234-training.appspot.com",
+  messagingSenderId: "1074266359038",
+  appId: "1:1074266359038:web:5472c8d5bd9d332292d1af"
+};
+
+if(window.location.hostname === 'localhost') {
+	firebaseConfig = {
+		databaseURL: "http://localhost:4000/",
+		projectId: "recipes-world-1234-training",
+	}
+}
+
+firebase.initializeApp(firebaseConfig);
+
 //==============================================================================
 
 

@@ -1,0 +1,118 @@
+[debug] [2020-11-09T20:56:56.791Z] ----------------------------------------------------------------------
+[debug] [2020-11-09T20:56:56.794Z] Command:       /usr/local/bin/node /usr/local/bin/firebase emulators:start
+[debug] [2020-11-09T20:56:56.794Z] CLI Version:   8.15.1
+[debug] [2020-11-09T20:56:56.795Z] Platform:      linux
+[debug] [2020-11-09T20:56:56.795Z] Node Version:  v14.15.0
+[debug] [2020-11-09T20:56:56.795Z] Time:          Mon Nov 09 2020 14:56:56 GMT-0600 (Central Standard Time)
+[debug] [2020-11-09T20:56:56.795Z] ----------------------------------------------------------------------
+[debug] [2020-11-09T20:56:56.796Z] 
+[debug] [2020-11-09T20:56:56.803Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-11-09T20:56:56.803Z] > authorizing via signed-in user
+[info] i  emulators: Starting emulators: auth, functions, firestore, hosting {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, hosting"}}
+[debug] [2020-11-09T20:56:56.834Z] [hub] writing locator at /tmp/hub-recipes-world-1234-training.json
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: database, pubsub {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mdatabase, pubsub\u001b[22m"}}
+[info] ✔  functions: Using node@14 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Using node@14 from host."}}
+[debug] [2020-11-09T20:56:56.877Z] defaultcredentials: writing to file /home/antonio/.config/firebase/antoniordznav12_gmail_com_application_default_credentials.json
+[debug] [2020-11-09T20:56:56.881Z] Setting GAC to /home/antonio/.config/firebase/antoniordznav12_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to /home/antonio/.config/firebase/antoniordznav12_gmail_com_application_default_credentials.json"}}
+[debug] [2020-11-09T20:56:56.893Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2020-11-09T20:56:56.894Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2020-11-09T20:56:56.894Z] Starting Firestore Emulator with command {"binary":"java","args":["-Duser.language=en","-jar","/home/antonio/.cache/firebase/emulators/cloud-firestore-emulator-v1.11.9.jar","--host","localhost","--port",8080,"--rules","/home/antonio/Documents/development/React/recipes-world/firestore.rules","--functions_emulator","localhost:5001"],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator","seed_from_export"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Duser.language=en\",\"-jar\",\"/home/antonio/.cache/firebase/emulators/cloud-firestore-emulator-v1.11.9.jar\",\"--host\",\"localhost\",\"--port\",8080,\"--rules\",\"/home/antonio/Documents/development/React/recipes-world/firestore.rules\",\"--functions_emulator\",\"localhost:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"functions_emulator\",\"seed_from_export\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[debug] [2020-11-09T20:56:58.467Z] API endpoint: http://localhost {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://localhost"}}
+[debug] [2020-11-09T20:56:58.468Z] :8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=localhost:8080
+
+Dev App Server is now running.
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":":8080\nIf you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\n\n   export FIRESTORE_EMULATOR_HOST=localhost:8080\n\nDev App Server is now running.\n\n"}}
+[debug] [2020-11-09T20:57:02.948Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/recipes-world-1234-training/webApps/-/config  
+ 
+[debug] [2020-11-09T20:57:03.394Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 09 Nov 2020 20:57:04 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] ✔  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[debug] [2020-11-09T20:57:03.464Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2020-11-09T20:57:03.465Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2020-11-09T20:57:03.465Z] Starting Emulator UI with command {"binary":"node","args":["/home/antonio/.cache/firebase/emulators/ui-v1.2.2/server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/home/antonio/.cache/firebase/emulators/ui-v1.2.2/server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2020-11-09T20:57:03.612Z] Web / API server started at http://localhost:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at http://localhost:4000\n"}}
+[info] i  functions: Watching "/home/antonio/Documents/development/React/recipes-world/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/home/antonio/Documents/development/React/recipes-world/functions\" for Cloud Functions..."}}
+[debug] [2020-11-09T20:57:03.750Z] [worker-pool] addWorker(~diagnostic~) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(~diagnostic~)"}}
+[debug] [2020-11-09T20:57:03.750Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key ~diagnostic~, total=1"}}
+[debug] [2020-11-09T20:57:03.750Z] [worker-pool] submitWork(triggerId=) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=)"}}
+[debug] [2020-11-09T20:57:03.751Z] [worker-~diagnostic~-6ade8386-84e5-4628-a78b-eb3f6e7cb0ef]: Assigning socketPath: /tmp/fire_emu_29958.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-6ade8386-84e5-4628-a78b-eb3f6e7cb0ef]: Assigning socketPath: /tmp/fire_emu_29958.sock"}}
+[debug] [2020-11-09T20:57:03.753Z] [worker-~diagnostic~-6ade8386-84e5-4628-a78b-eb3f6e7cb0ef]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-6ade8386-84e5-4628-a78b-eb3f6e7cb0ef]: BUSY"}}
+[debug] [2020-11-09T20:57:04.172Z] [runtime-status] [29958] Functions runtime initialized. {"cwd":"/home/antonio/Documents/development/React/recipes-world/functions","node_version":"14.15.0"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Functions runtime initialized. {\"cwd\":\"/home/antonio/Documents/development/React/recipes-world/functions\",\"node_version\":\"14.15.0\"}"}}
+[debug] [2020-11-09T20:57:04.173Z] [runtime-status] [29958] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Disabled runtime features: undefined"}}
+[debug] [2020-11-09T20:57:04.176Z] [runtime-status] [29958] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.3.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"9.3.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2020-11-09T20:57:04.180Z] [runtime-status] [29958] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-09T20:57:04.182Z] [runtime-status] [29958] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-09T20:57:04.186Z] [runtime-status] [29958] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2020-11-09T20:57:04.187Z] [runtime-status] [29958] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-09T20:57:04.280Z] [runtime-status] [29958] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Checked functions.config() {\"config\":{}}"}}
+[debug] [2020-11-09T20:57:04.280Z] [runtime-status] [29958] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2020-11-09T20:57:04.281Z] [runtime-status] [29958] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-09T20:57:04.283Z] [runtime-status] [29958] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.3.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"9.3.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2020-11-09T20:57:04.285Z] [runtime-status] [29958] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-09T20:57:04.285Z] [runtime-status] [29958] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.3.0","resolution":"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [29958] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"9.3.0\",\"resolution\":\"/home/antonio/Documents/development/React/recipes-world/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[info] 
+┌───────────────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! View status and logs at http://localhost:4000 │
+└───────────────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬─────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Authentication │ localhost:9099 │ http://localhost:4000/auth      │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Functions      │ localhost:5001 │ http://localhost:4000/functions │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Firestore      │ localhost:8080 │ http://localhost:4000/firestore │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Hosting        │ localhost:5000 │ n/a                             │
+└────────────────┴────────────────┴─────────────────────────────────┘
+  Other reserved ports: 4400, 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2020-11-09T20:57:04.296Z] [worker-~diagnostic~-6ade8386-84e5-4628-a78b-eb3f6e7cb0ef]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-6ade8386-84e5-4628-a78b-eb3f6e7cb0ef]: IDLE"}}
+[debug] [2020-11-09T21:08:02.502Z] d [FetchError]: request to http://localhost:4400/emulators failed, reason: connect ECONNREFUSED ::1:4400
+    at ClientRequest.<anonymous> (/home/antonio/.cache/firebase/emulators/ui-v1.2.2/server.bundle.js:326:16793)
+    at ClientRequest.emit (events.js:315:20)
+    at Socket.socketErrorListener (_http_client.js:469:9)
+    at Socket.emit (events.js:315:20)
+    at emitErrorNT (internal/streams/destroy.js:106:8)
+    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21) {
+  type: 'system',
+  errno: 'ECONNREFUSED',
+  code: 'ECONNREFUSED'
+}
+ {"metadata":{"emulator":{"name":"ui"},"message":"d [FetchError]: request to http://localhost:4400/emulators failed, reason: connect ECONNREFUSED ::1:4400\n    at ClientRequest.<anonymous> (/home/antonio/.cache/firebase/emulators/ui-v1.2.2/server.bundle.js:326:16793)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21) {\n  type: 'system',\n  errno: 'ECONNREFUSED',\n  code: 'ECONNREFUSED'\n}\n"}}
+[debug] [2020-11-09T21:08:11.670Z] Nov 09, 2020 3:08:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 09, 2020 3:08:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-09T21:08:12.058Z] Nov 09, 2020 3:08:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 09, 2020 3:08:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected HTTP/2 connection.\n"}}
+[debug] [2020-11-09T21:34:55.940Z] Nov 09, 2020 3:34:55 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 09, 2020 3:34:55 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-09T21:57:12.709Z] Nov 09, 2020 3:57:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 09, 2020 3:57:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-09T22:52:51.235Z] d [FetchError]: request to http://localhost:4400/emulators failed, reason: connect ECONNREFUSED ::1:4400
+    at ClientRequest.<anonymous> (/home/antonio/.cache/firebase/emulators/ui-v1.2.2/server.bundle.js:326:16793)
+    at ClientRequest.emit (events.js:315:20)
+    at Socket.socketErrorListener (_http_client.js:469:9)
+    at Socket.emit (events.js:315:20)
+    at emitErrorNT (internal/streams/destroy.js:106:8)
+    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21) {
+  type: 'system',
+  errno: 'ECONNREFUSED',
+  code: 'ECONNREFUSED'
+}
+ {"metadata":{"emulator":{"name":"ui"},"message":"d [FetchError]: request to http://localhost:4400/emulators failed, reason: connect ECONNREFUSED ::1:4400\n    at ClientRequest.<anonymous> (/home/antonio/.cache/firebase/emulators/ui-v1.2.2/server.bundle.js:326:16793)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21) {\n  type: 'system',\n  errno: 'ECONNREFUSED',\n  code: 'ECONNREFUSED'\n}\n"}}

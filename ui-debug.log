@@ -1,0 +1,25 @@
+Web / API server started at http://localhost:4000
+d [FetchError]: request to http://localhost:4400/emulators failed, reason: connect ECONNREFUSED ::1:4400
+    at ClientRequest.<anonymous> (/home/antonio/.cache/firebase/emulators/ui-v1.2.2/server.bundle.js:326:16793)
+    at ClientRequest.emit (events.js:315:20)
+    at Socket.socketErrorListener (_http_client.js:469:9)
+    at Socket.emit (events.js:315:20)
+    at emitErrorNT (internal/streams/destroy.js:106:8)
+    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21) {
+  type: 'system',
+  errno: 'ECONNREFUSED',
+  code: 'ECONNREFUSED'
+}
+d [FetchError]: request to http://localhost:4400/emulators failed, reason: connect ECONNREFUSED ::1:4400
+    at ClientRequest.<anonymous> (/home/antonio/.cache/firebase/emulators/ui-v1.2.2/server.bundle.js:326:16793)
+    at ClientRequest.emit (events.js:315:20)
+    at Socket.socketErrorListener (_http_client.js:469:9)
+    at Socket.emit (events.js:315:20)
+    at emitErrorNT (internal/streams/destroy.js:106:8)
+    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21) {
+  type: 'system',
+  errno: 'ECONNREFUSED',
+  code: 'ECONNREFUSED'
+}
