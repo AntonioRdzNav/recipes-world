@@ -1,17 +1,25 @@
 //==============================================================================
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 //==============================================================================
 import Input from "../../reusable/Input/index.jsx";
 import Button from "../../reusable/Button/index.jsx";
 
 import {
-    LoginPage,
-    LoginContainer,
-    LoginTitle,
-} from "./style"
+    AccountPage,
+    AccountContainer,
+    AccountTitle,
+    AccountLink
+} from "../style"
+
+import {
+	SIGNUP__ROUTE_PATH,
+} from "../../../data/urls"
 //==============================================================================
 
 function _Login() {
+
+    const history = useHistory();
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -19,9 +27,9 @@ function _Login() {
 	const [isLoading, setIsLoading] = useState(false);
     
   return (
-    <LoginPage>
-        <LoginContainer>
-            <LoginTitle> Login! </LoginTitle>
+    <AccountPage>
+        <AccountContainer>
+            <AccountTitle> Login! </AccountTitle>
             <Input 
                 label="Email"
 								type="email"
@@ -40,15 +48,18 @@ function _Login() {
 								checkForMissingField={isInputMissing}
 								isLoading={isLoading}
             />
-						<Button 
-							type="info"
-							onClick={() => {}}
-							isLoading={isLoading}
-							text="Login"
-							style={{ width:"100%", padding:"10px 0", fontSize:16, marginTop:30 }}
-						/>
-        </LoginContainer>
-    </LoginPage>
+            <AccountLink onClick={() => history.push(SIGNUP__ROUTE_PATH)}> 
+                Does not have an account yet? 
+            </AccountLink>
+            <Button 
+                type="info"
+                onClick={() => {}}
+                isLoading={isLoading}
+                text="Login"
+                style={{ width:"100%", padding:"10px 0", fontSize:16, marginTop:30 }}
+            />
+        </AccountContainer>
+    </AccountPage>
   );
 }
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 
-export const SignupPage = styled.div`
+export const AccountPage = styled.div`
     width: 100%;
     min-height: calc(100vh - 60px); 
     margin-top: 50px;
@@ -11,7 +11,7 @@ export const SignupPage = styled.div`
     justify-content: flex-start;
     align-items: center;    
 `
-export const SignupContainer = styled.div`
+export const AccountContainer = styled.div`
     width: 500px;
     background-color: ${() => window.colors["app__lightgray--hover"]};
     padding: 20px;
@@ -22,8 +22,16 @@ export const SignupContainer = styled.div`
     justify-content: flex-start;
     align-items: center;        
 `
-export const SignupTitle = styled.h2`
+export const AccountTitle = styled.h2`
     font-size: 18px;
     font-weight: 800;
     margin-bottom: 30px;
+`
+export const AccountLink = styled.div`
+    font-size: 14px;
+    color: ${() => window.colors["info"]};
+    font-weight: 700;
+    text-decoration: underline;
+    align-self: flex-start;
+    cursor: pointer;
 `

@@ -1,17 +1,25 @@
 //==============================================================================
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 //==============================================================================
 import Input from "../../reusable/Input/index.jsx";
 import Button from "../../reusable/Button/index.jsx";
 
 import {
-    SignupPage,
-    SignupContainer,
-    SignupTitle,
-} from "./style"
+    AccountPage,
+    AccountContainer,
+    AccountTitle,
+    AccountLink
+} from "../style"
+
+import {
+	LOGIN__ROUTE_PATH,
+} from "../../../data/urls"
 //==============================================================================
 
 function _Signup() {
+
+    const history = useHistory();    
 
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
@@ -20,9 +28,9 @@ function _Signup() {
 	const [isLoading, setIsLoading] = useState(false);
     
   return (
-    <SignupPage>
-        <SignupContainer>
-            <SignupTitle> Signup! </SignupTitle>
+    <AccountPage>
+        <AccountContainer>
+            <AccountTitle> Signup! </AccountTitle>
             <Input 
                 label="Name"
                 required={true}
@@ -49,6 +57,9 @@ function _Signup() {
                 checkForMissingField={isInputMissing}
                 isLoading={isLoading}
             />
+            <AccountLink onClick={() => history.push(LOGIN__ROUTE_PATH)}> 
+                Already have an account?
+            </AccountLink>                      
             <Button 
                 type="info"
                 onClick={() => {}}
@@ -56,8 +67,8 @@ function _Signup() {
                 text="Signup"
                 style={{ width:"100%", padding:"10px 0", fontSize:16, marginTop:30 }}
             />
-        </SignupContainer>
-    </SignupPage>
+        </AccountContainer>
+    </AccountPage>
   );
 }
 
