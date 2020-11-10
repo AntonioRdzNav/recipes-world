@@ -1,8 +1,11 @@
 //==============================================================================
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import _ from "lodash";
 import { useHistory } from 'react-router-dom';
 import ReactStars from "react-rating-stars-component";
 //==============================================================================
+import RecipeContext from "../../../context/recipe-context"
+
 import {
   Discover,
   Filters,
@@ -16,7 +19,15 @@ import {
 
 function _Discover() {
 
-	const history = useHistory();
+  const context = useContext(RecipeContext)
+  const history = useHistory();
+  
+  useEffect(() => {
+    const unsubscribeFromGetAllRecipes = context.GetAllRecipes();
+    return () => {
+      unsubscribeFromGetAllRecipes && unsubscribeFromGetAllRecipes();
+    }
+  }, [])
     
   return (
     <Discover>
@@ -25,19 +36,24 @@ function _Discover() {
       </Filters>
       <Recipes>
 
-        <RecipeContainer onClick={() => history.push(`/recipe/${"pozole"}`)}>
-          <RecipeImage src="https://saboryestilo.com.mx/wp-content/uploads/2019/08/como-preparar-pozole-rojo-1-1200x720.jpg" alt="Recipe Image"/>
-          <RecipeName> Pozole Rojo </RecipeName>
-          <RecipeDescription> This is a recipe to cook Pozole Rojo, the steps are detailed here:  </RecipeDescription>
-          <ReactStars
-            count={5}
-            value={4.5}
-            isHalf={true}
-            edit={false}
-            size={24}
-            activeColor={window.colors["app__rateStarColor"]}
-          />          
-        </RecipeContainer>
+        {_.map(context.recipes, (recipe) => {
+          const { id, image, name, description, avg_rating } = recipe;
+          return (
+            <RecipeContainer key={id} onClick={() => history.push(`/recipe/${id}`)}>
+              <RecipeImage src={image} alt="Recipe Image"/>
+              <RecipeName> {name} </RecipeName>
+              <RecipeDescription> {description} </RecipeDescription>
+              <ReactStars
+                count={5}
+                value={avg_rating}
+                isHalf={true}
+                edit={false}
+                size={24}
+                activeColor={window.colors["app__rateStarColor"]}
+              />          
+            </RecipeContainer>
+          )
+        })}
 
       </Recipes>
     </Discover>

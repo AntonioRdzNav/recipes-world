@@ -24,8 +24,8 @@ import {
 
 function _Login() {
 
-    const context = useContext(RecipeContext);
-    const history = useHistory();
+  const context = useContext(RecipeContext);
+  const history = useHistory();
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -39,11 +39,21 @@ function _Login() {
         }
         setIsInputMissing(false);
         setIsLoading(true);
-        // 
-        context.Login(email, password);
-        setEmail("");
-        setPassword("");
-        setIsLoading(false);
+        // login
+        function cleanForm () {
+          setEmail("");
+          setPassword("");
+          setIsLoading(false);          
+        }
+        context.Login(email, password)
+          .then(() => {
+            cleanForm();
+            // TODO: notification success
+          })
+          .catch(() => {
+            cleanForm();
+            // TODO: notification error
+          });
     }       
 
     if(context.loggedUser) {

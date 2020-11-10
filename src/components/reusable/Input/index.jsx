@@ -13,7 +13,7 @@ import {
 function _Input (props) {
 
     const { label="", disabled, placeholder=(props.label || ""), style } = props;
-    const { type="text", required, value, onChange } = props;
+    const { type="text", required, value, onChange, onKeyDown } = props;
     const { checkForMissingField=false, error, success, isLoading } = props;
 
     const theme = { 
@@ -39,7 +39,7 @@ function _Input (props) {
                     placeholder={placeholder}
                     value={value}
                     required={required}
-                    style={style}
+                    onKeyDown={onKeyDown}
                 />
 
 

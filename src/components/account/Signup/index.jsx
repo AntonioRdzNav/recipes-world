@@ -41,11 +41,21 @@ function _Signup() {
         setIsInputMissing(false);
         setIsLoading(true);
         // signup
-        context.Signup(name, email, password);
-        setName("");
-        setEmail("");
-        setPassword("");
-        setIsLoading(false);    
+        function cleanForm () {
+          setName("");          
+          setEmail("");
+          setPassword("");
+          setIsLoading(false);          
+        }
+        context.Signup(name, email, password)
+          .then(() => {
+            cleanForm();
+            // TODO: notification success
+          })
+          .catch(() => {
+            cleanForm();
+            // TODO: notification error
+          });        
     }    
 
     if(context.loggedUser) {

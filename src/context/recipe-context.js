@@ -7,5 +7,4 @@ export default React.createContext({
     recipes: [],
     selectedRecipe: null,
     selectedRecipeComments: [],
-    selectedRecipeSteps: [],
 });
