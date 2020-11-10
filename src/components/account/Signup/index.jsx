@@ -50,11 +50,11 @@ function _Signup() {
         context.Signup(name, email, password)
           .then(() => {
             cleanForm();
-            // TODO: notification success
+            context.TriggerNotification("success", `Welcome ${name}!`)
           })
           .catch(() => {
             cleanForm();
-            // TODO: notification error
+            context.TriggerNotification("error", "Could not Sign up.")
           });        
     }    
 
@@ -73,6 +73,7 @@ function _Signup() {
                 value={name}
                 checkForMissingField={isInputMissing}
                 isLoading={isLoading}
+                onKeyDown={(e) => e.key==="Enter" && Signup() }
             />
             <Input 
                 label="Email"
@@ -83,6 +84,7 @@ function _Signup() {
                 checkForMissingField={isInputMissing}
                 error={isInputMissing && !validateEmail(email)}
                 isLoading={isLoading}
+                onKeyDown={(e) => e.key==="Enter" && Signup() }
             />
             <Input 
                 label="Password"
@@ -92,6 +94,7 @@ function _Signup() {
                 value={password}
                 checkForMissingField={isInputMissing}
                 isLoading={isLoading}
+                onKeyDown={(e) => e.key==="Enter" && Signup() }
             />
             <AccountLink onClick={() => history.push(LOGIN__ROUTE_PATH)}> 
                 Already have an account?

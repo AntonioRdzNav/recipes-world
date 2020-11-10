@@ -1,7 +1,8 @@
 //==============================================================================
 import React, { useReducer, useEffect } from "react";
 import _ from "lodash";
-// API context
+
+// context + reducer
 import RecipesContext from "./recipe-context";
 import { recipeReducer } from "./reducers"; 
 import { 
@@ -15,7 +16,10 @@ import {
     GET_RECIPE,
 } from "./actions"; 
 
-import { enrichSnapshotWithId } from "../utils/Helpers"
+import { NotificationManager } from "react-notifications";
+import 'react-notifications/lib/notifications.css';
+
+import { enrichSnapshotWithId, capitalizeFirstLetter } from "../utils/Helpers"
 //==============================================================================
 // Firebase
 import firebase from "firebase/app"
@@ -81,6 +85,17 @@ useEffect(() => {
   }
 }, [loggedUser])       
 
+
+//////////////////////////////////////////////////////////////
+//                    SYSTEM ACTIONS
+//////////////////////////////////////////////////////////////
+const TriggerNotification = (type="success", content="", milliseconds) => {
+  if(!NotificationManager[type]){
+      return;
+  }
+  const defaultMilliseconds = (type==="success")? 2000 : 5000;
+  NotificationManager[type](content, `${capitalizeFirstLetter(type)}!`, milliseconds||defaultMilliseconds);
+};
 
 //////////////////////////////////////////////////////////////
 //                    ACCOUNT ACTIONS
@@ -173,12 +188,12 @@ useEffect(() => {
   const GetRecipe = (recipeId) => {
     // returns suscription (make sure to end it)
       return firestore
-          .collection("recipes")
-          .doc(recipeId)
-          .onSnapshot(docSnapshot => {
-            const recipe = { ...docSnapshot.data(), id:docSnapshot.uid };
-            dispatcher({ type: GET_RECIPE, payload: { selectedRecipe:recipe }});            
-          })            
+        .collection("recipes")
+        .doc(recipeId)
+        .onSnapshot(docSnapshot => {
+          const recipe = { ...docSnapshot.data(), id:docSnapshot.uid };
+          dispatcher({ type: GET_RECIPE, payload: { selectedRecipe:recipe }});            
+        })            
   };  
   const CreateRecipeIngredientsBatch = (recipeId, ingredients) => {
     return new Promise(async (resolve, reject) => {
@@ -220,6 +235,8 @@ useEffect(() => {
         recipes: globalState.recipes,
         selectedRecipe: globalState.selectedRecipe,
         selectedRecipeComments: globalState.selectedRecipeComments,
+        // system actions
+        TriggerNotification,
         // account actions
         GetUser,
         Login,

@@ -48,11 +48,11 @@ function _Login() {
         context.Login(email, password)
           .then(() => {
             cleanForm();
-            // TODO: notification success
+            context.TriggerNotification("info", `Welcome back!`, 2000)
           })
           .catch(() => {
             cleanForm();
-            // TODO: notification error
+            context.TriggerNotification("error", `Could not Log in`)
           });
     }       
 
@@ -73,6 +73,7 @@ function _Login() {
                 checkForMissingField={isInputMissing}
                 error={isInputMissing && !validateEmail(email)}
                 isLoading={isLoading}
+                onKeyDown={(e) => e.key==="Enter" && Login() }
             />
             <Input 
                 label="Password"
@@ -82,6 +83,7 @@ function _Login() {
                 value={password}
                 checkForMissingField={isInputMissing}
                 isLoading={isLoading}
+                onKeyDown={(e) => e.key==="Enter" && Login() }
             />
             <AccountLink onClick={() => history.push(SIGNUP__ROUTE_PATH)}> 
                 Does not have an account yet? 

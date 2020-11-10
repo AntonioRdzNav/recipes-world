@@ -4,20 +4,19 @@ import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 //==============================================================================
 import NavBar from "../NavBar/index.jsx";
-
 //==============================================================================
 
 function _DefaultLayout (props) {
 
-    return (                         
-        <>
-            <NavBar {...props}/>
+  return (                         
+    <>
+      <NavBar {...props}/>
 
-            { props.children }
+      { props.children }
 
-            <NotificationContainer />
-        </>
-    )
+      <NotificationContainer />
+    </>
+  )
 }
 
 export default _DefaultLayout;

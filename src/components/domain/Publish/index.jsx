@@ -118,12 +118,12 @@ function _Publish() {
         context.CreateRecipe(newRecipe, recipeIngredients)
           .then((newRecipe) => {
             cleanForm();
+            context.TriggerNotification("success", "Recipe successfully created.")
             history.push(`/recipe/${_.get(newRecipe, "id")}`);
-            // TODO: notification success
           })
           .catch(() => {
             cleanForm();
-            // TODO: notification error
+            context.TriggerNotification("error", "Could not create Recipe.")
           });
     }
     

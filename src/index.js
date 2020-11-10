@@ -52,24 +52,21 @@ function RouteWithLayout({
 }
 
 ReactDOM.render(
-  <React.StrictMode>
 
-		<GlobalState>
-			<Router>            
-					<Switch>                 
-						{/* Account */}
-						<RouteWithLayout exact path={LOGIN__ROUTE_PATH} component={Login} layout={DefaultLayout}/>                                  
-						<RouteWithLayout exact path={SIGNUP__ROUTE_PATH} component={Signup} layout={DefaultLayout}/>                                  
-						{/* Recipes */}
-						<RouteWithLayout exact path={DISCOVER__ROUTE_PATH} component={Discover} layout={DefaultLayout}/>                                  
-						<RouteWithLayout exact path={RECIPE_VIEW__ROUTE_PATH} component={RecipeView} layout={DefaultLayout}/>                                  
-						<RouteWithLayout exact path={PUBLISH__ROUTE_PATH} component={Publish} layout={DefaultLayout}/>                                  
-						<Redirect path="*" to={DISCOVER__ROUTE_PATH} />                   
-				</Switch>
-			</Router>  
-		</GlobalState>
-
-  </React.StrictMode>,
+  <GlobalState>
+    <Router>            
+        <Switch>                 
+          {/* Account */}
+          <RouteWithLayout exact path={LOGIN__ROUTE_PATH} component={Login} layout={DefaultLayout}/>                                  
+          <RouteWithLayout exact path={SIGNUP__ROUTE_PATH} component={Signup} layout={DefaultLayout}/>                                  
+          {/* Recipes */}
+          <RouteWithLayout exact path={DISCOVER__ROUTE_PATH} component={Discover} layout={DefaultLayout}/>                                  
+          <RouteWithLayout exact path={RECIPE_VIEW__ROUTE_PATH} component={RecipeView} layout={DefaultLayout}/>                                  
+          <RouteWithLayout exact path={PUBLISH__ROUTE_PATH} component={Publish} layout={DefaultLayout}/>                                  
+          <Redirect path="*" to={DISCOVER__ROUTE_PATH} />                   
+      </Switch>
+    </Router>  
+  </GlobalState>,
 	
   document.getElementById('root')
 );
