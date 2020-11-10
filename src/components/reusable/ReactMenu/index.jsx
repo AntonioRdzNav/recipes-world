@@ -46,7 +46,7 @@ function _ReactMenu (props) {
 																	onClick={() => {
 																			option.onClick();
 																			setTimeout(() => {                                        
-																					onClickBlur();
+																					onClickBlur && onClickBlur();
 																			}, 0);
 																	}}
 																	style={option.style}

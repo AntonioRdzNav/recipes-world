@@ -1,9 +1,7 @@
 //==============================================================================
-import React from "react";
+import React, { useContext } from "react";
+import _ from "lodash";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
-// import firebase from "firebase/app"
-// import "firebase/auth"
-// import { useAuthState } from "react-firebase-hooks/auth"
 //==============================================================================
 import { 
 	NavBar,
@@ -17,6 +15,8 @@ import {
 import Button from "../Button/index.jsx"
 import ReactMenu from "../ReactMenu/index.jsx"
 
+import RecipeContext from "../../../context/recipe-context"
+
 import { 
 	DISCOVER__ROUTE_PATH, 
 	PUBLISH__ROUTE_PATH,
@@ -25,26 +25,27 @@ import {
 } from "../../../data/urls"
 //==============================================================================
 
-// const auth = firebase.auth()
-
 function _NavBar() {
 
-    // const [user] = useAuthState(auth);
+    const context = useContext(RecipeContext);
+
+    const { loggedUser, logout } = context;
+
 	const match = useRouteMatch();
 	const history = useHistory();
 
 	const matchedUrl = match.url;
 	const isInAccountUrl = matchedUrl===LOGIN__ROUTE_PATH || matchedUrl===SIGNUP__ROUTE_PATH;
 
-	const userAvatar = "https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI";
+    const userAvatar = "https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI";
 	const userName = "Antonio Rodriguez"
 
-	const menuOptions = [
-		{
-			label: "Logout",
-			onClick: ()=>{},
-		}
-	]
+    const menuOptions = [
+        {
+            label: "Logout",
+            onClick: logout,
+        }
+    ]    
 
   return (
 	<NavBar>
@@ -59,14 +60,14 @@ function _NavBar() {
 
 		</LinksContainer>
 
-		{/* {!user && !isInAccountUrl && <Button 
+		{!loggedUser && !isInAccountUrl && <Button 
 			type="white"
 			onClick={() => history.push(LOGIN__ROUTE_PATH)}
 			text="Login"
 			style={{ marginRight:20 }}
 		/>}
 
-		{user && <ReactMenu 
+		{loggedUser && <ReactMenu 
 			label={
 			<UserData>
 				<UserAvatar src={userAvatar} alt="User Avatar"/>
@@ -75,7 +76,7 @@ function _NavBar() {
 			}
 			options={menuOptions}
 			widthMenu="230px"
-		/>} */}
+		/>}
 
 	</NavBar>	  
   );

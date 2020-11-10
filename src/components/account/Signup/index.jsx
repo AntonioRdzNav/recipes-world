@@ -1,9 +1,11 @@
 //==============================================================================
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useHistory, Redirect } from "react-router-dom";
 //==============================================================================
 import Input from "../../reusable/Input/index.jsx";
 import Button from "../../reusable/Button/index.jsx";
+
+import RecipeContext from "../../../context/recipe-context"
 
 import { isAnyEmpty, validateEmail } from "../../../utils/Helpers"
 
@@ -15,12 +17,14 @@ import {
 } from "../style"
 
 import {
+    DISCOVER__ROUTE_PATH,
 	LOGIN__ROUTE_PATH,
 } from "../../../data/urls"
 //==============================================================================
 
 function _Signup() {
 
+    const context = useContext(RecipeContext);
     const history = useHistory();    
 
 	const [name, setName] = useState("");
@@ -42,6 +46,11 @@ function _Signup() {
         setPassword("");
         setIsLoading(false);
         // redirect to another url
+        history.push(DISCOVER__ROUTE_PATH)        
+    }    
+
+    if(context.loggedUser) {
+        return <Redirect to={DISCOVER__ROUTE_PATH}/>
     }    
     
   return (
