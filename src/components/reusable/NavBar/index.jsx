@@ -29,7 +29,7 @@ function _NavBar() {
 
     const context = useContext(RecipeContext);
 
-    const { loggedUser, logout } = context;
+    const { isLoggedIn, loggedUser, Logout } = context;
 
 	const match = useRouteMatch();
 	const history = useHistory();
@@ -37,13 +37,12 @@ function _NavBar() {
 	const matchedUrl = match.url;
 	const isInAccountUrl = matchedUrl===LOGIN__ROUTE_PATH || matchedUrl===SIGNUP__ROUTE_PATH;
 
-    const userAvatar = "https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI";
-	const userName = "Antonio Rodriguez"
+    const userAvatar = _.get(loggedUser, "avatar") || "/images/user-placeholder.jpg";
 
     const menuOptions = [
         {
             label: "Logout",
-            onClick: logout,
+            onClick: Logout,
         }
     ]    
 
@@ -60,18 +59,18 @@ function _NavBar() {
 
 		</LinksContainer>
 
-		{!loggedUser && !isInAccountUrl && <Button 
+		{!isLoggedIn && !isInAccountUrl && <Button 
 			type="white"
 			onClick={() => history.push(LOGIN__ROUTE_PATH)}
 			text="Login"
 			style={{ marginRight:20 }}
 		/>}
 
-		{loggedUser && <ReactMenu 
+		{isLoggedIn && <ReactMenu 
 			label={
 			<UserData>
 				<UserAvatar src={userAvatar} alt="User Avatar"/>
-				<UserName style={{ color:"white" }}> {userName} </UserName>
+				<UserName style={{ color:"white" }}> {_.get(loggedUser, "name")} </UserName>
 			</UserData>			
 			}
 			options={menuOptions}

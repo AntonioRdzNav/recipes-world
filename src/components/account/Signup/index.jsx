@@ -41,12 +41,11 @@ function _Signup() {
         setIsInputMissing(false);
         setIsLoading(true);
         // signup
+        context.Signup(name, email, password);
         setName("");
         setEmail("");
         setPassword("");
-        setIsLoading(false);
-        // redirect to another url
-        history.push(DISCOVER__ROUTE_PATH)        
+        setIsLoading(false);    
     }    
 
     if(context.loggedUser) {

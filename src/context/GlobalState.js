@@ -5,10 +5,10 @@ import _ from "lodash";
 import RecipesContext from "./recipe-context";
 import { recipeReducer } from "./reducers"; 
 import { 
-    LOGIN, 
-    SIGNUP,
-    LOGOUT,
+    USER_IS_LOGGEDIN,
     GET_LOGGED_USER,
+    GET_USER,
+    LOGOUT,
 } from "./actions"; 
 
 //==============================================================================
@@ -17,7 +17,6 @@ import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
 
-import { useCollectionData, useDocumentData } from "react-firebase-hooks/firestore"
 import { useAuthState } from "react-firebase-hooks/auth"
 
 const firebaseConfig = {
@@ -45,61 +44,89 @@ if(window.location.hostname === 'localhost') {
 
 
 function GlobalState (props) {
+
+    let unsubscribeMethodForLoggedUser = null;    
     
 //////////////////////////////////////////////////////////////
 //                       GlobalState
 //////////////////////////////////////////////////////////////
     const [globalState, dispatcher] = useReducer(recipeReducer, {
+        isLoggedIn: false,
         loggedUser: null,
-        user: null,
+        selectedUser: null,
         recipes: [],
         selectedRecipe: null,
         selectedRecipeComments: [],
         selectedRecipeSteps: [],        
-    }); 
-
+    });  
 //////////////////////////////////////////////////////////////
-//                     AUTH HOOKS
+//                      HOOKS
 //////////////////////////////////////////////////////////////
-    const [user, loading, error] = useAuthState(auth);
-
-    useEffect(() => {
-        dispatcher({ type: GET_LOGGED_USER, payload: { loggedUser: user } })
-    }, [user])       
+    const [loggedUser, loadingLoggedUser, errorLoggedUser] = useAuthState(auth);
 
 //////////////////////////////////////////////////////////////
 //                    ACCOUNT ACTIONS
 //////////////////////////////////////////////////////////////
-    const login = (email, password) => { 
+    const GetUser = (userId, options) => {
+        return firestore
+            .collection("users")
+            .doc(userId)
+            .onSnapshot(doc => {
+                const user = { ...doc.data(), id:doc.uid };
+                if(_.get(options, "isGettingLoggedUser")) {
+                    dispatcher({ type: GET_LOGGED_USER, payload: { loggedUser: user }});            
+                } else {
+                    dispatcher({ type: GET_USER, payload: { selectedUser: user }});
+                }
+            })            
+    }
+    const CreateUser = (userId, username, email) => {
+        const newUser = {
+            name: username,
+            email,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            avatar: "/images/user-placeholder.jpg",
+        }
+        firestore
+            .collection("users")
+            .doc(userId)
+            .set(newUser)
+            .then()
+            .catch(console.log)
+    }
+    const Login = (email, password) => { 
         auth.signInWithEmailAndPassword(email, password)
-            .then(result => {
-                console.log("dev: dispatcher: login", result)
-                dispatcher({ type: LOGIN, payload: {
-                    loggedUser: _.get(result, "user"),
-                }});
-            })
+            .then(console.log)
             .catch(console.log);               
     }
-    // const createUser = (userId, username) => {
-
-    // }
-    const signup = (name, email, password) => {
-        // return new Promise((resolve, reject) => {
-        //     auth.createUserWithEmailAndPassword(email, password)
-        //         .then(result => {
-        //             const createdUser = _.get(result, "user");
-        //         })
-        //         .catch(reject);                  
-        // });
-        // dispatcher({ type: SIGNUP, payload });     
-    }
-    const logout = () => {
-        auth.signOut()
-            .then(() => {
-                dispatcher({ type: LOGOUT, payload: null });
+    const Signup = (name, email, password) => {
+        auth.createUserWithEmailAndPassword(email, password)
+            .then(result => {
+                const createdUserId = _.get(result, "user.uid");
+                CreateUser(createdUserId, name, email);
             })
+            .catch(console.log);                  
+    }
+    const Logout = () => {
+        auth.signOut()
+            .then(() => dispatcher({ type: LOGOUT, payload: null }))
             .catch(console.log);        
     } 
+
+//////////////////////////////////////////////////////////////
+//                       EFFECTS
+//////////////////////////////////////////////////////////////
+    useEffect(() => {
+        dispatcher({ type: USER_IS_LOGGEDIN, payload: { isLoggedIn: (loggedUser!==null) } });
+        if(loggedUser) {
+            console.log("dev: getting logged user", loggedUser)
+            unsubscribeMethodForLoggedUser = GetUser(loggedUser.uid, { isGettingLoggedUser: true });
+        }
+    }, [loggedUser])    
+
+    useEffect(() => {
+        unsubscribeMethodForLoggedUser && unsubscribeMethodForLoggedUser()
+    }, [])      
 
 //////////////////////////////////////////////////////////////
 //                       PROVIDER
@@ -107,16 +134,18 @@ function GlobalState (props) {
     return <RecipesContext.Provider
         value={{
             // state
+            isLoggedIn: globalState.isLoggedIn,
             loggedUser: globalState.loggedUser,
-            user: globalState.user,
+            selectedUser: globalState.selectedUser,
             recipes: globalState.recipes,
             selectedRecipe: globalState.selectedRecipe,
             selectedRecipeComments: globalState.selectedRecipeComments,
             selectedRecipeSteps: globalState.selectedRecipeSteps,
             // auth methods
-            login,
-            signup,
-            logout,
+            GetUser,
+            Login,
+            Signup,
+            Logout,
         }}
     >
         {props.children}

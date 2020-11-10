@@ -25,19 +25,19 @@ import {
 let recipeComments = [
 	{
 		id: "12",
-		authorAvatar: "https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI",
+		authorAvatar: "/images/user-placeholder.jpg",
 		authorName: "Antonio Rodriguez",
 		commentText: "Really tasty, but I would say that the chilli used may be wrong.",
 	},
 	{
 		id: "2",
-		authorAvatar: "https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI",
+		authorAvatar: "/images/user-placeholder.jpg",
 		authorName: "Antonio Rodriguez",
 		commentText: "Really tasty, but I would say that the chilli used may be wrong.",
 	},
 	{
 		id: "23",
-		authorAvatar: "https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI",
+		authorAvatar: "/images/user-placeholder.jpg",
 		authorName: "Antonio Rodriguez",
 		commentText: "Really tasty, but I would say that the chilli used may be wrong.",
 	}
@@ -54,7 +54,7 @@ function _RecipeView() {
 	const createComment = () => {
 		// recipeComments.push({
 		// 	id: "4",
-		// 	authorAvatar: "https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI",
+		// 	authorAvatar: "/images/user-placeholder.jpg",
 		// 	authorName: "Antonio Rodriguez",
 		// 	commentText: newComment,
 		// })
@@ -77,7 +77,7 @@ function _RecipeView() {
 				/>  
 					<RecipeAuthorData>
 							<span style={{ marginRight:20, fontWeight:800 }}>Author: </span>
-							<RecipeAuthorAvatar src="https://media-exp1.licdn.com/dms/image/C4E03AQGBLSX5AG4Reg/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=MRHqRfAg4HMI1_EqdZjP0TneBo2yto0R7TcqlHEtBMI" alt="Author Avatar"/>
+							<RecipeAuthorAvatar src="/images/user-placeholder.jpg" alt="Author Avatar"/>
 							<RecipeAuthorUsername> Antonio Rodriguez </RecipeAuthorUsername>
 					</RecipeAuthorData>
 			</RecipeMainInformation>

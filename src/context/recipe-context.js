@@ -1,8 +1,9 @@
 import React from "react";
 
 export default React.createContext({
+    isLoggedIn: false,
     loggedUser: null,
-    user: null,
+    selectedUser: null,
     recipes: [],
     selectedRecipe: null,
     selectedRecipeComments: [],

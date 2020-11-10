@@ -40,12 +40,10 @@ function _Login() {
         setIsInputMissing(false);
         setIsLoading(true);
         // 
-        context.login(email, password);
+        context.Login(email, password);
         setEmail("");
         setPassword("");
         setIsLoading(false);
-        // redirect to another url
-        history.push(DISCOVER__ROUTE_PATH)
     }       
 
     if(context.loggedUser) {
