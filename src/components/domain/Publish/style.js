@@ -35,7 +35,7 @@ export const RecipeLabel = styled.div`
     margin-bottom: 10px;
 `
 export const RemoveIcon = styled.i`
-    display: none;
+    /* display: none; */
     color: ${() => window.colors["danger"]};
     position: absolute;
     right: 6px;
@@ -80,9 +80,9 @@ export const Step = styled.li`
     list-style: decimal;
     font-size: 15px;
     margin: 15px 0;
-    &:hover i{
+    /* &:hover i{
       display: block;
-    }
+    } */
 `
 // Ingredients
 export const AddRecipeIngredient = styled(AddRecipeStep)`   

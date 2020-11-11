@@ -80,14 +80,15 @@ function _RecipeView() {
       setIsReviewTextMissing(true);
       return;
     }
+    const { avatar, name:username, id:userId } = (context.loggedUser || {});
     setIsReviewTextMissing(false);
     // Create recipe review
 		const newRecipeReview = {
       text: newReviewText,
       rating: newRecipeRating,
-      authorName,
-      authorAvatar,
-      authorId,
+      authorName: username,
+      authorAvatar: avatar,
+      authorId: userId,
     }
     context.CreateRecipeReview(recipeId, newRecipeReview);
     setNewReviewText("");
@@ -118,8 +119,8 @@ function _RecipeView() {
         </div>
 					<RecipeAuthorData>
 							<span style={{ marginRight:20, fontWeight:800 }}>Author: </span>
-							<RecipeAuthorAvatar src="/images/user-placeholder.jpg" alt="Author Avatar"/>
-							<RecipeAuthorUsername> {_.get(context, "loggedUser.")} </RecipeAuthorUsername>
+							<RecipeAuthorAvatar src={authorAvatar} alt="Author Avatar"/>
+							<RecipeAuthorUsername> {authorName} </RecipeAuthorUsername>
 					</RecipeAuthorData>
 					<RecipeDate>
 							<span style={{ marginRight:20, fontWeight:800 }}>Created At: </span>
