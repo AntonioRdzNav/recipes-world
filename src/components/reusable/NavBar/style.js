@@ -9,7 +9,7 @@ export const NavBar = styled.div`
     position: sticky;
     position: -webkit-sticky;
     top: 0px;
-    z-index: 1;
+    z-index: 2;
     /* flex */
     display: flex;
     flex-direction: row;
