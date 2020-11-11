@@ -121,7 +121,6 @@ function _Publish() {
         steps: recipeSteps,
         ingredient_keys: _.map(recipeIngredients, ingredient => ingredient.name),
         avg_rating: 0,
-        total_ratings: 0,
         total_reviews: 0,
       }
       context.CreateRecipe(newRecipe, recipeIngredients)
