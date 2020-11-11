@@ -12,8 +12,11 @@ import {
     // Recipes actions
     GET_ALL_RECIPES,
     GET_RECIPE,
+    DELETE_RECIPE,
     GET_RECIPE_REVIEWS,
+    DELETE_RECIPE_REVIEWS,
     GET_RECIPE_INGREDIENTS,
+    DELETE_RECIPE_INGREDIENTS,
 } from "./actions"
 //==============================================================================
 
@@ -61,11 +64,23 @@ const GetRecipe = (payload, state) => {
     const { selectedRecipe } = payload;
     return { ...state, selectedRecipe };
 }
+const DeleteRecipe = (payload, state) => {
+    const { selectedRecipe } = payload;
+    return { ...state, selectedRecipe };
+}
 const GetRecipeReviews = (payload, state) => {
     const { selectedRecipeReviews } = payload;
     return { ...state, selectedRecipeReviews };
 }
+const DeleteRecipeReviews = (payload, state) => {
+    const { selectedRecipeReviews } = payload;
+    return { ...state, selectedRecipeReviews };
+}
 const GetRecipeIngredients = (payload, state) => {
+    const { selectedRecipeIngredients } = payload;
+    return { ...state, selectedRecipeIngredients };
+}
+const DeleteRecipeIngredients = (payload, state) => {
     const { selectedRecipeIngredients } = payload;
     return { ...state, selectedRecipeIngredients };
 }
@@ -92,10 +107,16 @@ export const recipeReducer = (state, action) => {
             return GetAllRecipes(action.payload, state);
         case GET_RECIPE:
             return GetRecipe(action.payload, state);
+        case DELETE_RECIPE:
+            return DeleteRecipe(action.payload, state);
         case GET_RECIPE_REVIEWS:
             return GetRecipeReviews(action.payload, state);
+        case DELETE_RECIPE_REVIEWS:
+            return DeleteRecipeReviews(action.payload, state);
         case GET_RECIPE_INGREDIENTS:
             return GetRecipeIngredients(action.payload, state);
+        case DELETE_RECIPE_INGREDIENTS:
+            return DeleteRecipeIngredients(action.payload, state);
         // Default
         default:
             return state;

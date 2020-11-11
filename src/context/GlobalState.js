@@ -16,8 +16,11 @@ import {
     // Recipes actions
     GET_ALL_RECIPES,
     GET_RECIPE,
+    DELETE_RECIPE,
     GET_RECIPE_REVIEWS,
+    DELETE_RECIPE_REVIEWS,
     GET_RECIPE_INGREDIENTS,
+    DELETE_RECIPE_INGREDIENTS,
 } from "./actions"; 
 
 import { NotificationManager } from "react-notifications";
@@ -205,6 +208,30 @@ const ToggleModal = (modalParameters) => {
           dispatcher({ type: GET_RECIPE, payload: { selectedRecipe:recipe }});            
         })            
   };  
+  const DeleteRecipe = (recipeId) => {
+    return new Promise((resolve, reject) => {
+      // delete ingredients subcollection
+      return DeleteRecipeIngredients(recipeId)
+        .then(() => {
+          // then delete reviews subcollection
+          DeleteRecipeReviews(recipeId)
+            .then(() => {
+              // then delete recipe document
+              firestore
+                .collection("recipes")
+                .doc(recipeId)
+                .delete()
+                .then(() => {
+                  dispatcher({ type: DELETE_RECIPE, payload: { selectedRecipe:null }});  
+                  resolve();
+                })
+                .catch(reject);
+            })
+            .catch(reject);
+        })
+        .catch(reject);
+    });          
+  };  
   const GetRecipeReviews = (recipeId) => {
     // returns suscription (make sure to end it)
     return firestore
@@ -213,8 +240,8 @@ const ToggleModal = (modalParameters) => {
     .collection("reviews")
     .onSnapshot(collectionSnapshot => {
       const selectedRecipeReviews = enrichSnapshotWithId(collectionSnapshot);
-          dispatcher({ type: GET_RECIPE_REVIEWS, payload: { selectedRecipeReviews }});            
-        })            
+      dispatcher({ type: GET_RECIPE_REVIEWS, payload: { selectedRecipeReviews }});            
+    })            
   };    
   const CreateRecipeReview = (recipeId, newRecipeReview) => {
     return new Promise((resolve, reject) => {
@@ -230,6 +257,29 @@ const ToggleModal = (modalParameters) => {
       .catch(reject);
     });
   };
+  const DeleteRecipeReviews = (recipeId) => {
+    return new Promise(async (resolve, reject) => {
+      const reviewsCollRef = firestore.collection("recipes").doc(recipeId).collection("reviews");
+      reviewsCollRef.get()
+        .then(async (snapshot) => {
+          const reviewIds = _.map(enrichSnapshotWithId(snapshot), review => review.id);
+          const batch = firestore.batch();
+          for (const reviewId of reviewIds) {
+            const reviewRef = firestore
+              .collection("recipes").doc(recipeId)
+              .collection("reviews").doc(reviewId)
+            await batch.delete(reviewRef);
+          }
+          batch.commit()
+            .then(() => {
+              dispatcher({ type: DELETE_RECIPE_REVIEWS, payload: { selectedRecipeReviews:null }});
+              resolve();
+            })
+            .catch(reject);          
+        })
+        .catch(reject);
+    });   
+  }
   const GetRecipeIngredients = (recipeId) => {
     // returns suscription (make sure to end it)
     return firestore
@@ -247,14 +297,37 @@ const ToggleModal = (modalParameters) => {
       for (const ingredient of ingredients) {
         const ingredientRef = firestore
           .collection("recipes").doc(recipeId)
-          .collection("ingredients").doc()
-        await batch.set(ingredientRef, ingredient)
+          .collection("ingredients").doc();
+        await batch.set(ingredientRef, ingredient);
       }
       batch.commit()
         .then(resolve)
         .catch(reject);
     });
   };
+  const DeleteRecipeIngredients = (recipeId) => {
+    return new Promise(async (resolve, reject) => {
+      const ingredientsCollRef = firestore.collection("recipes").doc(recipeId).collection("ingredients");
+      ingredientsCollRef.get()
+        .then(async (snapshot) => {
+          const ingredientIds = _.map(enrichSnapshotWithId(snapshot), ingredient => ingredient.id);
+          const batch = firestore.batch();
+          for (const ingredientId of ingredientIds) {
+            const ingredientRef = firestore
+              .collection("recipes").doc(recipeId)
+              .collection("ingredients").doc(ingredientId)
+            await batch.delete(ingredientRef);
+          }
+          batch.commit()
+            .then(() => { 
+              dispatcher({ type: DELETE_RECIPE_INGREDIENTS, payload: { selectedRecipeIngredients:null }});    
+              resolve();
+            })
+            .catch(reject);          
+        })
+        .catch(reject);
+    });      
+  };    
 
 //////////////////////////////////////////////////////////////
 //                       PROVIDER
@@ -284,6 +357,7 @@ const ToggleModal = (modalParameters) => {
         GetAllRecipes,
         CreateRecipe,
         GetRecipe,
+        DeleteRecipe,
         GetRecipeReviews,
         CreateRecipeReview,    
         GetRecipeIngredients,    

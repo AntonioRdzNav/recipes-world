@@ -142,10 +142,14 @@ function _RecipeView() {
                       onYesLabel="Delete Recipe"
                       onYesFunction={() => {
                           context.ToggleModal();
-                          // context.DeleteRecipe
-                          //   .then(() => {
-                          //     history.push(DISCOVER__ROUTE_PATH);
-                          //   })
+                          context.DeleteRecipe(recipeId)
+                            .then(() => {
+                              context.TriggerNotification("success", "Succesfully deleted the recipe");
+                              history.push(DISCOVER__ROUTE_PATH);
+                            })
+                            .catch(() => {
+                              context.TriggerNotification("error", "Could not delete the recipe");
+                            })                    
                       }}
                   />
               })}}
