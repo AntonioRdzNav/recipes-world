@@ -1,6 +1,6 @@
 //==============================================================================
-import React, { useState, useContext } from "react";
-import { useHistory } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import { useHistory, useParams } from 'react-router-dom';
 import _ from "lodash";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -14,6 +14,7 @@ import { isAnyEmpty } from "../../../utils/Helpers"
 
 import {
     PublishPage,
+    BackLink,
     PublishContainer,
     PublishTitle,
     RecipeLabel,
@@ -31,10 +32,11 @@ import {
 } from "./style"
 //==============================================================================
 
-function _Publish() {
+function _RecipeEdit() {
 
   const context = useContext(RecipeContext);
   const history = useHistory();
+  const { recipeId } = useParams();
 
   // recipe main info 
 	const [recipeName, setRecipeName] = useState("");
@@ -51,7 +53,23 @@ function _Publish() {
   const [isIngredientInputMissing, setIsIngredientInputMissing] = useState(false);
   // UX
 	const [isInputMissing, setIsInputMissing] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);    
+  const [isLoading, setIsLoading] = useState(false);    
+  
+  useEffect(() => {
+    context.GetRecipeOnce(recipeId)
+      .then(recipe => {
+        const { name:recipeName, description, image, steps } = (recipe || {});
+        setRecipeName(recipeName);
+        setRecipeDescription(description);
+        setRecipeImageUrl(_.get(image, "url"));
+        setRecipeSteps(steps);
+      });
+    context.GetRecipeIngredientsOnce(recipeId)
+      .then(ingredients => {
+        setRecipeIngredients(ingredients);
+      });
+  }, []);
+
 
   const addRecipeStep = () => {
     if(isAnyEmpty(newStepText)) {
@@ -90,7 +108,7 @@ function _Publish() {
     modifiedIngredients.splice(index, 1);
     setRecipeIngredients(modifiedIngredients);      
   }    
-  const publishRecipe = () => {
+  const updateRecipe = () => {
       if(isAnyEmpty(recipeName, recipeImageUrl, recipeDescription) || _.isEmpty(recipeSteps) || _.isEmpty(recipeIngredients)) {
           setIsInputMissing(true);
           return;
@@ -105,8 +123,7 @@ function _Publish() {
         setRecipeSteps([]);
         setIsLoading(false);
       }
-      const { name:authorName, avatar:authorAvatar, id:authorId } = (context.loggedUser || {});
-      const newRecipe = {
+      const updatedRecipe = {
         name: recipeName, 
         description: recipeDescription,
         image: {
@@ -114,32 +131,31 @@ function _Publish() {
           size: 0,
           type: "image/jpeg",
           filename: "recipe.jpg",
-        },
-        authorName,
-        authorAvatar,
-        authorId,       
+        },   
         steps: recipeSteps,
         ingredient_keys: _.map(recipeIngredients, ingredient => ingredient.name),
-        avg_rating: 0,
-        total_reviews: 0,
       }
-      context.CreateRecipe(newRecipe, recipeIngredients)
-        .then((newRecipe) => {
+      context.UpdateRecipe(recipeId, updatedRecipe, recipeIngredients)
+        .then(() => {
           cleanForm();
-          context.TriggerNotification("success", "Recipe successfully created.")
-          history.push(`/recipe/${_.get(newRecipe, "id")}`);
+          context.TriggerNotification("success", "Recipe successfully updated.")
+          history.push(`/recipe/${recipeId}`);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log("error: ", error)
           cleanForm();
-          context.TriggerNotification("error", "Could not create the Recipe.")
+          context.TriggerNotification("error", "Could not update the Recipe.")
         });
   }
     
   return (
     <PublishPage>
+      <BackLink
+        onClick={() => history.push(`/recipe/${recipeId}`)}
+      > {`<- Back to Recipe View`} </BackLink>
       <PublishContainer>
 
-        <PublishTitle> Publish new Recipe </PublishTitle>
+        <PublishTitle> Edit your Recipe </PublishTitle>
         <Input 
             label="RecipeName"
             required={true}
@@ -247,9 +263,9 @@ function _Publish() {
 
         <Button 
             type="success"
-            onClick={publishRecipe}
+            onClick={updateRecipe}
             isLoading={isLoading}
-            text="Publish"
+            text="Update"
             style={{ width:"100%", padding:"10px 0", fontSize:16, marginTop:30 }}
         />            
 
@@ -258,4 +274,4 @@ function _Publish() {
   );
 }
 
-export default _Publish;
+export default _RecipeEdit;

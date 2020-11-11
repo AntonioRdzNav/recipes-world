@@ -2,6 +2,8 @@
 import React from "react";
 import moment from "moment";
 import StarRatings from 'react-star-ratings';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 //==============================================================================
 import {
     ReviewContainer,
@@ -41,6 +43,12 @@ function _Review (props) {
                 name='rating'
               />        
             </ReviewAdditionalData>
+            {/* <EditIcon onClick={() => {}}>
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </EditIcon>
+            <RemoveIcon onClick={() => {}}>
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </RemoveIcon> */}
         </ReviewContainer>        
     )
 }

@@ -53,7 +53,7 @@ function _RecipeView() {
   const history = useHistory();
 
   const { name:recipeName, description, image, steps, avg_rating } = (context.selectedRecipe || {});
-  const { total_reviews, createdAt, authorName, authorAvatar, authorId } = (context.selectedRecipe || {});
+  const { total_reviews, createdAt, authorName, authorAvatar } = (context.selectedRecipe || {});
 
 	const [newRecipeRating, setNewReviewRating] = useState(null);
   const [newReviewText, setNewReviewText] = useState("");
@@ -131,7 +131,7 @@ function _RecipeView() {
           <ButtonsContainer>
             <Button 
               type="warning"
-              onClick={() => {}}
+              onClick={() => history.push(`/recipe/${recipeId}/edit`)}
               text="Edit"		
             />            
             <Button 

@@ -16,6 +16,7 @@ import DefaultLayout from "./components/reusable/DefaultLayout/index.jsx";
 // domain
 import Discover from "./components/domain/Discover/index.jsx";
 import RecipeView from "./components/domain/RecipeView/index.jsx";
+import RecipeEdit from "./components/domain/RecipeEdit/index.jsx";
 import Publish from "./components/domain/Publish/index.jsx";
 // account
 import Login from "./components/account/Login/index.jsx";
@@ -24,6 +25,7 @@ import Signup from "./components/account/Signup/index.jsx";
 import { 
     DISCOVER__ROUTE_PATH, 
     RECIPE_VIEW__ROUTE_PATH,
+    RECIPE_EDIT__ROUTE_PATH,
     PUBLISH__ROUTE_PATH,
 		LOGIN__ROUTE_PATH,
 		SIGNUP__ROUTE_PATH,
@@ -62,6 +64,7 @@ ReactDOM.render(
           {/* Recipes */}
           <RouteWithLayout exact path={DISCOVER__ROUTE_PATH} component={Discover} layout={DefaultLayout}/>                                  
           <RouteWithLayout exact path={RECIPE_VIEW__ROUTE_PATH} component={RecipeView} layout={DefaultLayout}/>                                  
+          <RouteWithLayout exact path={RECIPE_EDIT__ROUTE_PATH} component={RecipeEdit} layout={DefaultLayout}/>                                  
           <RouteWithLayout exact path={PUBLISH__ROUTE_PATH} component={Publish} layout={DefaultLayout}/>                                  
           <Redirect path="*" to={DISCOVER__ROUTE_PATH} />                   
       </Switch>

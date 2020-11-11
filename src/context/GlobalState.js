@@ -204,9 +204,44 @@ const ToggleModal = (modalParameters) => {
         .collection("recipes")
         .doc(recipeId)
         .onSnapshot(docSnapshot => {
-          const recipe = { ...docSnapshot.data(), id:docSnapshot.uid };
+          const recipe = { ...docSnapshot.data(), id:docSnapshot.id };
           dispatcher({ type: GET_RECIPE, payload: { selectedRecipe:recipe }});            
         })            
+  };  
+  const GetRecipeOnce = (recipeId) => {
+    return new Promise((resolve, reject) => {
+      return firestore
+        .collection("recipes")
+        .doc(recipeId)
+        .get()  
+        .then(docSnapshot => {
+          const recipe = { ...docSnapshot.data(), id:docSnapshot.id };
+          dispatcher({ type: GET_RECIPE, payload: { selectedRecipe:recipe }});  
+          resolve(recipe);
+        })
+        .catch(reject);        
+    });
+  };  
+  const UpdateRecipe = (recipeId, updatedRecipe, updatedIngredients) => {
+    return new Promise((resolve, reject) => {
+      return firestore
+          .collection("recipes")
+          .doc(recipeId)
+          .set({ 
+              ...updatedRecipe, 
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge:true })
+          .then(() => {
+            DeleteRecipeIngredients(recipeId)
+              .then(() => {
+                CreateRecipeIngredientsBatch(recipeId, updatedIngredients)
+                .then(resolve)
+                .catch(reject);                  
+              })
+              .catch(reject);              
+          })
+          .catch(reject);
+    });        
   };  
   const DeleteRecipe = (recipeId) => {
     return new Promise((resolve, reject) => {
@@ -283,12 +318,27 @@ const ToggleModal = (modalParameters) => {
   const GetRecipeIngredients = (recipeId) => {
     // returns suscription (make sure to end it)
     return firestore
-    .collection("recipes")
-    .doc(recipeId)
-    .collection("ingredients")
-    .onSnapshot(collectionSnapshot => {
-      const selectedRecipeIngredients = enrichSnapshotWithId(collectionSnapshot);
-      dispatcher({ type: GET_RECIPE_INGREDIENTS, payload: { selectedRecipeIngredients }});            
+      .collection("recipes")
+      .doc(recipeId)
+      .collection("ingredients")
+      .onSnapshot(collectionSnapshot => {
+        const selectedRecipeIngredients = enrichSnapshotWithId(collectionSnapshot);
+        dispatcher({ type: GET_RECIPE_INGREDIENTS, payload: { selectedRecipeIngredients }});            
+      });
+  };   
+  const GetRecipeIngredientsOnce = (recipeId) => {
+    return new Promise((resolve, reject) => {
+      return firestore
+        .collection("recipes")
+        .doc(recipeId)
+        .collection("ingredients")
+        .get()  
+        .then(collectionSnapshot => {
+          const selectedRecipeIngredients = enrichSnapshotWithId(collectionSnapshot);
+          dispatcher({ type: GET_RECIPE_INGREDIENTS, payload: { selectedRecipeIngredients }});  
+          resolve(selectedRecipeIngredients);
+        })
+        .catch(reject);        
     });
   };   
   const CreateRecipeIngredientsBatch = (recipeId, ingredients) => {
@@ -357,10 +407,13 @@ const ToggleModal = (modalParameters) => {
         GetAllRecipes,
         CreateRecipe,
         GetRecipe,
+        GetRecipeOnce,
+        UpdateRecipe,
         DeleteRecipe,
         GetRecipeReviews,
         CreateRecipeReview,    
-        GetRecipeIngredients,    
+        GetRecipeIngredients,  
+        GetRecipeIngredientsOnce,  
       }}
     >
       {props.children}

@@ -8,6 +8,7 @@ export const PUBLISH__ROUTE_PATH = "/publish";
 
 export const RECIPE_VIEW__ROUTE_PATH = "/recipe/:recipeId";
 
+export const RECIPE_EDIT__ROUTE_PATH = "/recipe/:recipeId/edit";
 
 //////////////////////////////////////////////////////////////
 //                         ACCOUNT
