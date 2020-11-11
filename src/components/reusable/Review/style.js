@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 
 export const ReviewContainer = styled.div`
@@ -7,6 +7,7 @@ export const ReviewContainer = styled.div`
     padding: 5px 15px;
     background-color: white;
     margin: 15px 0;
+    position: relative;
     /* flex */
     display: flex;
     flex-direction: column;
@@ -47,4 +48,46 @@ export const ReviewAdditionalData = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;      
+`
+export const Icon = styled.i`
+    font-size: 13px;
+    /* animation */
+    transition: all 0.1s;
+    cursor: pointer;
+    &:hover {
+      font-size: 15px;
+    }
+`
+export const RemoveIcon = styled(Icon)`
+    color: ${() => window.colors["danger"]};
+    position: absolute;
+    right: 4px;
+    top: 10%;
+    transform: translateY(-10%);
+`
+export const CancelIcon = styled(Icon)`
+    color: ${() => window.colors["app__lightgray"]};
+    position: absolute;
+    right: 7px;
+    top: 10%;
+    transform: translateY(-10%);
+`
+export const EditIcon = styled(Icon)`
+    color: ${() => window.colors["info"]};
+    position: absolute;
+    right: 2px;
+    top: 40%;
+    transform: translateY(-40%);
+`
+export const RatingInput = styled.div`
+    width: 100%;
+    background-color: white;
+    ${props => props.error && css`
+        border: ${() => window.colors["danger"]} solid 2px;
+    `}
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;  
 `

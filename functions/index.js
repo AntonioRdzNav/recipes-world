@@ -16,14 +16,8 @@ exports.updateRecipeReviewAnalyticsData = functions
   .firestore
   .document("/recipes/{recipeId}/reviews/{reviewId}")
   .onWrite(async (change, context) => {
-    const reviewData = change.after.data();
-    if(!reviewData) {
-      return null;
-    }
 
-    const newRating = reviewData.rating;
     const recipeId = context.params.recipeId;
-    console.log("change: ",change, "context: ",context);
 
     return admin.firestore().runTransaction((transaction) => {
       const recipeDocRef = recipesCollectionRef.doc(recipeId);
@@ -33,9 +27,46 @@ exports.updateRecipeReviewAnalyticsData = functions
         }
         const prevAvgRating = doc.data().avg_rating;
         const prevTotalReviews = doc.data().total_reviews;
-        const newTotalReviews = prevTotalReviews + 1;
+        
+        
+        // calculate new data depending on what happened: CREATE, UPDATE or DELETE
+        const lastRating = (change.before.data() || {}).rating;
+        const newRating = (change.after.data() || {}).rating;
+        let incomingRating = null;
+        let newTotalReviews = null;
+        let newAvgRating = null;
+        if(!lastRating && newRating) {
+          // onCreate
+          console.log("dev: EVENT: ", "onCreate")
+          incomingRating = newRating;
+          newTotalReviews = prevTotalReviews + 1;
+        } else if(lastRating && newRating) {
+          // onUpdate
+          console.log("dev: EVENT: ", "onUpdate")
+          incomingRating = newRating - lastRating;
+          newTotalReviews = prevTotalReviews + 0;          
+        } else if(lastRating && !newRating) {
+          // onDelete
+          console.log("dev: EVENT: ", "onDelete")
+          incomingRating = 0 - lastRating;
+          newTotalReviews = prevTotalReviews - 1;          
+        }        
+        else {
+          return null;
+        }
+
+
         // calculate new average using basic math operations
-        const newAvgRating = parseFloat((((prevAvgRating * prevTotalReviews) + newRating) / newTotalReviews).toFixed(2));
+        if(newTotalReviews > 0) {
+          newAvgRating = parseFloat((((prevAvgRating * prevTotalReviews) + incomingRating) / newTotalReviews).toFixed(2));
+        } else if (newTotalReviews === 0) {
+          newAvgRating = 0;
+        } else {
+          return null
+        }
+
+        
+        // update recipe document
         return transaction.set(recipeDocRef, { 
           avg_rating: newAvgRating,
           total_reviews: newTotalReviews,

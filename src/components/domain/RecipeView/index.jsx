@@ -49,8 +49,8 @@ import {
 function _RecipeView() {
 
   const context = useContext(RecipeContext);
-  const { recipeId } = useParams();
   const history = useHistory();
+  const { recipeId } = useParams();
 
   const { name:recipeName, description, image, steps, avg_rating } = (context.selectedRecipe || {});
   const { total_reviews, createdAt, authorName, authorAvatar } = (context.selectedRecipe || {});
@@ -222,7 +222,9 @@ function _RecipeView() {
 						authorName={reviewAuthorName}
 						text={text}
 						rating={rating}
-						createdAt={createdAt}
+            createdAt={createdAt}
+            reviewId={id}
+            recipeId={recipeId}
 					/>			
 				})}
 			</RecipeReviews>

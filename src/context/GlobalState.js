@@ -315,6 +315,30 @@ const ToggleModal = (modalParameters) => {
         .catch(reject);
     });   
   }
+  const DeleteRecipeReview = (recipeId, reviewId) => {
+    return new Promise((resolve, reject) => {
+      return firestore
+        .collection("recipes")
+        .doc(recipeId)
+        .collection("reviews")
+        .doc(reviewId)
+        .delete()
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+  const UpdateRecipeReview = (recipeId, reviewId, updatedReview) => {
+    return new Promise((resolve, reject) => {
+      return firestore
+        .collection("recipes")
+        .doc(recipeId)
+        .collection("reviews")
+        .doc(reviewId)
+        .set(updatedReview, { merge:true })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
   const GetRecipeIngredients = (recipeId) => {
     // returns suscription (make sure to end it)
     return firestore
@@ -411,7 +435,9 @@ const ToggleModal = (modalParameters) => {
         UpdateRecipe,
         DeleteRecipe,
         GetRecipeReviews,
-        CreateRecipeReview,    
+        CreateRecipeReview,
+        UpdateRecipeReview,    
+        DeleteRecipeReview,
         GetRecipeIngredients,  
         GetRecipeIngredientsOnce,  
       }}
