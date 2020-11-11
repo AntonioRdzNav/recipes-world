@@ -24,6 +24,7 @@ import {
   RecipeAuthorAvatar,
   RecipeAuthorUsername,
   RecipeDate,
+  ButtonsContainer,
   // details
   RecipeDetails,
   TitleLabel,
@@ -82,7 +83,7 @@ function _RecipeView() {
       authorAvatar,
       authorId,
     }
-    context.CreateRecipeReview(recipeId, newRecipeReview)
+    context.CreateRecipeReview(recipeId, newRecipeReview);
     setNewReviewText("");
     setNewReviewRating(null);
   }
@@ -118,6 +119,19 @@ function _RecipeView() {
                 {moment(convertTimestampToDate(createdAt)).format('MMMM Do YYYY, h:mm a')}
               </RecipeAuthorUsername>
 					</RecipeDate>
+          <ButtonsContainer>
+            <Button 
+              type="warning"
+              onClick={() => createReview()}
+              text="Edit"		
+            />            
+            <Button 
+              type="danger"
+              onClick={() => createReview()}
+              text="Delete"			
+              style={{ marginLeft:15, marginRight:20 }}
+            />            
+          </ButtonsContainer>          
 			</RecipeMainInformation>
       
       <RecipeDetails>

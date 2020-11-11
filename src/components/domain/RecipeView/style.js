@@ -72,6 +72,16 @@ export const RecipeAuthorUsername = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
 `
+export const ButtonsContainer = styled.div`
+    position: absolute;
+    right: 0px;
+    bottom: 20px;
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;  
+`
 //////////////////////////////////////////////////////////////
 //                          DETAILS
 //////////////////////////////////////////////////////////////
