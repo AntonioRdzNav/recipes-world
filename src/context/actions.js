@@ -1,4 +1,7 @@
 
+// SYSTEM ACTIONS
+export const TOGGLE_MODAL = "TOGGLE_MODAL";
+
 // ACCOUNT ACTIONS
 export const USER_IS_LOGGEDIN = "USER_IS_LOGGEDIN";
 export const GET_USER = "GET_USER";

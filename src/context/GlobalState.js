@@ -6,6 +6,8 @@ import _ from "lodash";
 import RecipesContext from "./recipe-context";
 import { recipeReducer } from "./reducers"; 
 import { 
+    // System actions
+    TOGGLE_MODAL,
     // Account actions
     USER_IS_LOGGEDIN,
     GET_LOGGED_USER,
@@ -60,6 +62,9 @@ function GlobalState (props) {
 //                       GlobalState
 //////////////////////////////////////////////////////////////
   const [globalState, dispatcher] = useReducer(recipeReducer, {
+      // system state
+      modalParameters: { isOpened: false },
+      // recipe state
       isLoggedIn: false,
       loggedUser: null,
       selectedUser: null,
@@ -97,6 +102,9 @@ const TriggerNotification = (type="success", content="", milliseconds) => {
   }
   const defaultMilliseconds = (type==="success")? 2000 : 5000;
   NotificationManager[type](content, `${capitalizeFirstLetter(type)}!`, milliseconds||defaultMilliseconds);
+};
+const ToggleModal = (modalParameters) => {
+  dispatcher({ type: TOGGLE_MODAL, payload: { modalParameters }});
 };
 
 //////////////////////////////////////////////////////////////
@@ -254,7 +262,9 @@ const TriggerNotification = (type="success", content="", milliseconds) => {
   return (
     <RecipesContext.Provider
       value={{
-        // state
+        // system state
+        modalParameters: globalState.modalParameters,
+        // recipe state
         isLoggedIn: globalState.isLoggedIn,
         loggedUser: globalState.loggedUser,
         selectedUser: globalState.selectedUser,
@@ -264,6 +274,7 @@ const TriggerNotification = (type="success", content="", milliseconds) => {
         selectedRecipeIngredients: globalState.selectedRecipeIngredients,
         // system actions
         TriggerNotification,
+        ToggleModal,
         // account actions
         GetUser,
         Login,

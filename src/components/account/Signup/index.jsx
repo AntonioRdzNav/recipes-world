@@ -17,7 +17,7 @@ import {
 } from "../style"
 
 import {
-    DISCOVER__ROUTE_PATH,
+  DISCOVER__ROUTE_PATH,
 	LOGIN__ROUTE_PATH,
 } from "../../../data/urls"
 //==============================================================================

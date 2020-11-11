@@ -1,5 +1,9 @@
 //==============================================================================
+import _ from "lodash";
+//==============================================================================
 import {
+    // System actions
+    TOGGLE_MODAL,
     // Account actions
     USER_IS_LOGGEDIN,
     GET_USER,
@@ -14,6 +18,20 @@ import {
 //==============================================================================
 
 
+//////////////////////////////////////////////////////////////
+//                   System Methods
+//////////////////////////////////////////////////////////////
+const ToggleModal = (payload, state) => {
+    const { modalParameters } = payload;
+    const { modalParameters:lastModalParamters } = state;
+    return { 
+      ...state, 
+      modalParameters: { 
+        ...modalParameters, 
+        isOpened:!_.get(lastModalParamters, "isOpened") 
+      } 
+    };    
+}
 //////////////////////////////////////////////////////////////
 //                   Account Methods
 //////////////////////////////////////////////////////////////
@@ -57,6 +75,9 @@ const GetRecipeIngredients = (payload, state) => {
 //////////////////////////////////////////////////////////////
 export const recipeReducer = (state, action) => {
     switch (action.type) {
+        // System Actions
+        case TOGGLE_MODAL:
+            return ToggleModal(action.payload, state);
         // Account Actions
         case USER_IS_LOGGEDIN:
             return UserIsLoggedIn(action.payload, state);

@@ -1,17 +1,22 @@
 //==============================================================================
 import React, { useState, useContext, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import _ from "lodash";
 import moment from "moment";
 import ReactStars from "react-rating-stars-component";
 //==============================================================================
-import RecipeReview from "../../reusable/Review/index.jsx"
-import Input from "../../reusable/Input/index"
-import Button from "../../reusable/Button/index"
+import RecipeReview from "../../reusable/Review/index.jsx";
+import Input from "../../reusable/Input/index.jsx";
+import Button from "../../reusable/Button/index.jsx";
+import ModalConfirm from "../../reusable/Modals/ModalConfirm.jsx";
 
 import RecipeContext from "../../../context/recipe-context";
 
 import { isAnyEmpty, convertTimestampToDate } from "../../../utils/Helpers"
+
+import {
+  DISCOVER__ROUTE_PATH,
+} from "../../../data/urls"
 
 import {
   RecipeView,
@@ -45,6 +50,7 @@ function _RecipeView() {
 
   const context = useContext(RecipeContext);
   const { recipeId } = useParams();
+  const history = useHistory();
 
   const { name:recipeName, description, image, steps, avg_rating } = (context.selectedRecipe || {});
   const { total_ratings, createdAt, authorName, authorAvatar, authorId } = (context.selectedRecipe || {});
@@ -122,12 +128,25 @@ function _RecipeView() {
           <ButtonsContainer>
             <Button 
               type="warning"
-              onClick={() => createReview()}
+              onClick={() => {}}
               text="Edit"		
             />            
             <Button 
               type="danger"
-              onClick={() => createReview()}
+              onClick={() => {
+                context.ToggleModal({
+                  title: "Do you want to delete this Recipe?",
+                  content: <ModalConfirm 
+                      onYesLabel="Delete Recipe"
+                      onYesFunction={() => {
+                          context.ToggleModal();
+                          // context.DeleteRecipe
+                          //   .then(() => {
+                          //     history.push(DISCOVER__ROUTE_PATH);
+                          //   })
+                      }}
+                  />
+              })}}
               text="Delete"			
               style={{ marginLeft:15, marginRight:20 }}
             />            
