@@ -1,6 +1,5 @@
 //==============================================================================
-import _ from "lodash";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -22,11 +21,6 @@ Modal.setAppElement('#root')
 function _ModalGeneric () {
 
     const context = useContext(RecipeContext);
-
-    useEffect(() => {
-      console.log("dev: ", context.modalParameters)
-    }, [context.modalParameters])
-
 
     const closeModal = () => {
       context.ToggleModal({

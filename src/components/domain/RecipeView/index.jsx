@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useParams, useHistory } from 'react-router-dom';
 import _ from "lodash";
 import moment from "moment";
-import ReactStars from "react-rating-stars-component";
+import StarRatings from 'react-star-ratings';
 //==============================================================================
 import RecipeReview from "../../reusable/Review/index.jsx";
 import Input from "../../reusable/Input/index.jsx";
@@ -53,7 +53,7 @@ function _RecipeView() {
   const history = useHistory();
 
   const { name:recipeName, description, image, steps, avg_rating } = (context.selectedRecipe || {});
-  const { total_ratings, createdAt, authorName, authorAvatar, authorId } = (context.selectedRecipe || {});
+  const { total_reviews, createdAt, authorName, authorAvatar, authorId } = (context.selectedRecipe || {});
 
 	const [newRecipeRating, setNewReviewRating] = useState(null);
   const [newReviewText, setNewReviewText] = useState("");
@@ -104,15 +104,17 @@ function _RecipeView() {
 				<RecipeName> {recipeName} </RecipeName>
 				<RecipeDescription> {description} </RecipeDescription>
         <div style={{ alignSelf:"flex-end",display:"flex",justifyContent:"flex-start",alignItems:"center" }}>
-          <ReactStars
-            count={5}
-            value={avg_rating}
-            isHalf={true}
-            edit={false}
-            size={24}
-            activeColor={window.colors["app__rateStarColor"]}
-          />  
-          <span style={{ marginLeft:5,fontSize:16 }}> {`(${total_ratings || 0})`} </span>
+          <div style={{ background:"white", padding:"4px", borderRadius:5 }}>
+            <StarRatings
+              starDimension="22px"
+              starSpacing="2px"
+              rating={avg_rating}
+              starRatedColor={window.colors["app__rateStarColor"]}
+              numberOfStars={5}
+              name='rating'
+            />          
+            <span style={{ marginLeft:5,fontSize:16 }}> {`(${total_reviews || 0})`} </span>
+          </div>
         </div>
 					<RecipeAuthorData>
 							<span style={{ marginRight:20, fontWeight:800 }}>Author: </span>
@@ -190,14 +192,15 @@ function _RecipeView() {
               checkForMissingField={isReviewTextMissing}
           />
           <RatingInput error={isReviewTextMissing && newRecipeRating===null}>
-            <ReactStars
-              count={5}
-              value={newRecipeRating}
-              isHalf={true}
-              size={22}
-              activeColor={window.colors["app__rateStarColor"]}
-              onChange={ratingChanged}
-            />  
+            <StarRatings
+              starDimension="22px"
+              rating={newRecipeRating || 0}
+              starRatedColor={window.colors["app__rateStarColor"]}
+              starHoverColor={window.colors["app__rateStarColor"]}
+              numberOfStars={5}
+              name='rating'
+              changeRating={ratingChanged}
+            />                
           </RatingInput>
           <Button 
             type="warning"

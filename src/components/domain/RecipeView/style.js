@@ -49,7 +49,6 @@ export const RecipeDescription = styled.div`
     font-weight: 400;
 `
 export const RecipeAuthorData = styled.div`
-    margin-top: 40px;
     width: 100%;
     /* flex */
     display: flex;

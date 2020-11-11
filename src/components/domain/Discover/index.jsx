@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from "react";
 import _ from "lodash";
 import { useHistory } from 'react-router-dom';
-import ReactStars from "react-rating-stars-component";
+import StarRatings from 'react-star-ratings';
 //==============================================================================
 import RecipeContext from "../../../context/recipe-context"
 
@@ -40,17 +40,17 @@ function _Discover() {
           const { id, image, name, description, avg_rating } = recipe;
           return (
             <RecipeContainer key={id} onClick={() => history.push(`/recipe/${id}`)}>
-              <RecipeImage src={image} alt="Recipe Image"/>
+              <RecipeImage src={_.get(image, "url")} alt="Recipe Image"/>
               <RecipeName> {name} </RecipeName>
               <RecipeDescription> {description} </RecipeDescription>
-              <ReactStars
-                count={5}
-                value={avg_rating}
-                isHalf={true}
-                edit={false}
-                size={24}
-                activeColor={window.colors["app__rateStarColor"]}
-              />          
+              <StarRatings
+                starDimension="19px"
+                starSpacing="2px"
+                rating={avg_rating}
+                starRatedColor={window.colors["app__rateStarColor"]}
+                numberOfStars={5}
+                name='rating'
+              />                  
             </RecipeContainer>
           )
         })}

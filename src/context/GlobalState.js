@@ -227,7 +227,7 @@ const ToggleModal = (modalParameters) => {
         const reviewId = result.id;
         resolve({ ...newRecipeReview, id:reviewId });      
       })
-          .catch(reject);
+      .catch(reject);
     });
   };
   const GetRecipeIngredients = (recipeId) => {

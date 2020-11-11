@@ -1,7 +1,7 @@
 //==============================================================================
 import React from "react";
 import moment from "moment";
-import ReactStars from "react-rating-stars-component";
+import StarRatings from 'react-star-ratings';
 //==============================================================================
 import {
     ReviewContainer,
@@ -32,14 +32,14 @@ function _Review (props) {
             <ReviewText> {text} </ReviewText>
             <ReviewAdditionalData>
               <ReviewDate> {moment(createdAtDate).format('MMMM Do YYYY, h:mm a')} </ReviewDate>
-              <ReactStars
-                count={5}
-                value={rating}
-                isHalf={true}
-                edit={false}
-                size={20}
-                activeColor={window.colors["app__rateStarColor"]}
-              />         
+              <StarRatings
+                starDimension="17px"
+                starSpacing="0px"
+                rating={rating}
+                starRatedColor={window.colors["app__rateStarColor"]}
+                numberOfStars={5}
+                name='rating'
+              />        
             </ReviewAdditionalData>
         </ReviewContainer>        
     )
