@@ -1,119 +1,190 @@
 //==============================================================================
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import _ from "lodash";
+import moment from "moment";
 import ReactStars from "react-rating-stars-component";
 //==============================================================================
-import RecipeComment from "../../reusable/Comment/index.jsx"
+import RecipeReview from "../../reusable/Review/index.jsx"
 import Input from "../../reusable/Input/index"
 import Button from "../../reusable/Button/index"
 
+import RecipeContext from "../../../context/recipe-context";
+
+import { isAnyEmpty, convertTimestampToDate } from "../../../utils/Helpers"
+
 import {
-	RecipeView,
+  RecipeView,
+  // main info
 	RecipeMainInformation,
 	RecipeImage,
 	RecipeName,
 	RecipeDescription,
+  RecipeAuthorData,
+  RecipeAuthorAvatar,
+  RecipeAuthorUsername,
+  RecipeDate,
+  // details
+  RecipeDetails,
+  TitleLabel,
+  RecipeIngredients,
+  IngredientData,
+  IngredientName,
+  IngredientQuantity,
 	RecipeSteps,
-    RecipeAuthorData,
-    RecipeAuthorAvatar,
-    RecipeAuthorUsername,
-	Step,
-    RecipeComments,
+  Step,
+  // reviews
+  ReviewStickyContainer,
+  RatingInput,
+  RecipeReviews,
 } from "./style"
 //==============================================================================
 
-let recipeComments = [
-	{
-		id: "12",
-		authorAvatar: "/images/user-placeholder.jpg",
-		authorName: "Antonio Rodriguez",
-		commentText: "Really tasty, but I would say that the chilli used may be wrong.",
-	},
-	{
-		id: "2",
-		authorAvatar: "/images/user-placeholder.jpg",
-		authorName: "Antonio Rodriguez",
-		commentText: "Really tasty, but I would say that the chilli used may be wrong.",
-	},
-	{
-		id: "23",
-		authorAvatar: "/images/user-placeholder.jpg",
-		authorName: "Antonio Rodriguez",
-		commentText: "Really tasty, but I would say that the chilli used may be wrong.",
-	}
-];
-
 function _RecipeView() {
 
-	const [recipeRating, setRecipeRating] = useState(0);
-	const [newComment, setNewComment] = useState("");
+  const context = useContext(RecipeContext);
+  const { recipeId } = useParams();
+
+  const { name:recipeName, description, image, steps, avg_rating } = (context.selectedRecipe || {});
+  const { total_ratings, createdAt, authorName, authorAvatar, authorId } = (context.selectedRecipe || {});
+
+	const [newRecipeRating, setNewReviewRating] = useState(null);
+  const [newReviewText, setNewReviewText] = useState("");
+  // UX
+  const [isReviewTextMissing, setIsReviewTextMissing] = useState(false);
+  const [isViewingIngredients, setIsViewingIngredients] = useState(true);
+
+  useEffect(() => {
+    const unsubscribeFromGetRecipe = context.GetRecipe(recipeId);
+    const unsubscribeFromGetRecipeReviews = context.GetRecipeReviews(recipeId);
+    const unsubscribeFromGetRecipeIngredients = context.GetRecipeIngredients(recipeId);
+    return () => {
+      unsubscribeFromGetRecipe && unsubscribeFromGetRecipe();
+      unsubscribeFromGetRecipeReviews && unsubscribeFromGetRecipeReviews();
+      unsubscribeFromGetRecipeIngredients && unsubscribeFromGetRecipeIngredients();
+    }
+  }, [])  
 
   const ratingChanged = (newRating) => {
-		setRecipeRating(newRating)
+		setNewReviewRating(newRating)
   };
-	const createComment = () => {
-		// recipeComments.push({
-		// 	id: "4",
-		// 	authorAvatar: "/images/user-placeholder.jpg",
-		// 	authorName: "Antonio Rodriguez",
-		// 	commentText: newComment,
-		// })
-		setNewComment("")
-	}
+	const createReview = () => {
+    if (isAnyEmpty(newReviewText) || newRecipeRating===null) {
+      setIsReviewTextMissing(true);
+      return;
+    }
+    setIsReviewTextMissing(false);
+    // Create recipe review
+		const newRecipeReview = {
+      text: newReviewText,
+      rating: newRecipeRating,
+      authorName,
+      authorAvatar,
+      authorId,
+    }
+    context.CreateRecipeReview(recipeId, newRecipeReview)
+    setNewReviewText("");
+    setNewReviewRating(null);
+  }
+  const toggleRecipeDetailsView = () => {
+    setIsViewingIngredients(!isViewingIngredients);
+  }
     
   return (
     <RecipeView>
 			<RecipeMainInformation>
-				<RecipeImage src="https://saboryestilo.com.mx/wp-content/uploads/2019/08/como-preparar-pozole-rojo-1-1200x720.jpg" alt="Recipe Image"/>
-				<RecipeName> Pozole Rojo </RecipeName>
-				<RecipeDescription> This is a recipe to cook Pozole Rojo, the steps are detailed here: </RecipeDescription>
-				<ReactStars
-					count={5}
-					value={recipeRating}
-					isHalf={true}
-					size={24}
-					activeColor={window.colors["app__rateStarColor"]}
-					onChange={ratingChanged}
-				/>  
+				<RecipeImage src={_.get(image, "url")} alt="Recipe Image"/>
+				<RecipeName> {recipeName} </RecipeName>
+				<RecipeDescription> {description} </RecipeDescription>
+        <div style={{ alignSelf:"flex-end",display:"flex",justifyContent:"flex-start",alignItems:"center" }}>
+          <ReactStars
+            count={5}
+            value={avg_rating}
+            isHalf={true}
+            edit={false}
+            size={24}
+            activeColor={window.colors["app__rateStarColor"]}
+          />  
+          <span style={{ marginLeft:5,fontSize:16 }}> {`(${total_ratings || 0})`} </span>
+        </div>
 					<RecipeAuthorData>
 							<span style={{ marginRight:20, fontWeight:800 }}>Author: </span>
 							<RecipeAuthorAvatar src="/images/user-placeholder.jpg" alt="Author Avatar"/>
-							<RecipeAuthorUsername> Antonio Rodriguez </RecipeAuthorUsername>
+							<RecipeAuthorUsername> {_.get(context, "loggedUser.")} </RecipeAuthorUsername>
 					</RecipeAuthorData>
+					<RecipeDate>
+							<span style={{ marginRight:20, fontWeight:800 }}>Created At: </span>
+							<RecipeAuthorUsername> 
+                {moment(convertTimestampToDate(createdAt)).format('MMMM Do YYYY, h:mm a')}
+              </RecipeAuthorUsername>
+					</RecipeDate>
 			</RecipeMainInformation>
-			<RecipeSteps>
-				<Step>
-					This is step 1
-				</Step>
-				<Step>
-					This is step 2
-				</Step>
-			</RecipeSteps>
-			<RecipeComments>
-				<Input 
-						label="Write a new comment..."
-						placeholder="Comment"
-						onChange={(e) => setNewComment(e.target.value)}
-						value={newComment}
-						style={{ background:"white", marginBottom:5 }}
-				/>
-				<Button 
-					type="warning"
-					onClick={() => createComment()}
-					text="Create Comment"
-					style={{ width:"100%", marginBottom:30 }}				
-				/>
+      
+      <RecipeDetails>
+        <RecipeIngredients
+          onClick={() => { !isViewingIngredients && toggleRecipeDetailsView() }}
+          isViewing={isViewingIngredients}
+        >
+          <TitleLabel> Ingredients </TitleLabel>
+          {_.map(context.selectedRecipeIngredients, (ingredient) => {
+            const { name, quantity, id } = ingredient;
+            return(
+              <IngredientData key={id}>
+                <IngredientName>{name}</IngredientName>
+                :
+                <IngredientQuantity>{quantity}</IngredientQuantity>
+              </IngredientData>
+            )
+          })}
+        </RecipeIngredients>
+        <RecipeSteps
+          onClick={() => { isViewingIngredients && toggleRecipeDetailsView() }}
+          isViewing={!isViewingIngredients}
+        >
+          <TitleLabel> Steps </TitleLabel>
+          {_.map(steps, (step, i) => <Step key={i}> {step} </Step> )}
+        </RecipeSteps>
+      </RecipeDetails>
 
-				{_.map(recipeComments, (comment) => {
-					const { id, authorAvatar, authorName, commentText } = comment;
-					return <RecipeComment 
+			<RecipeReviews>
+        <ReviewStickyContainer>
+          <Input 
+              label="Rate the Recipe:"
+              placeholder="Review"
+              onChange={(e) => setNewReviewText(e.target.value)}
+              value={newReviewText}
+              style={{ background:"white", marginBottom:5 }}
+              checkForMissingField={isReviewTextMissing}
+          />
+          <RatingInput error={isReviewTextMissing && newRecipeRating===null}>
+            <ReactStars
+              count={5}
+              value={newRecipeRating}
+              isHalf={true}
+              size={22}
+              activeColor={window.colors["app__rateStarColor"]}
+              onChange={ratingChanged}
+            />  
+          </RatingInput>
+          <Button 
+            type="warning"
+            onClick={() => createReview()}
+            text="Create Review"
+            style={{ width:"100%" }}				
+          />
+        </ReviewStickyContainer>
+				{_.map(context.selectedRecipeReviews, (review) => {
+					const { id, authorAvatar, authorName:reviewAuthorName, text, rating, createdAt } = review;
+					return <RecipeReview 
 						key={id}
 						authorAvatar={authorAvatar}
-						authorName={authorName}
-						commentText={commentText}
+						authorName={reviewAuthorName}
+						text={text}
+						rating={rating}
+						createdAt={createdAt}
 					/>			
 				})}
-			</RecipeComments>
+			</RecipeReviews>
     </RecipeView>
   );
 }

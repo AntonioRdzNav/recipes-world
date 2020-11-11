@@ -8,6 +8,8 @@ import {
     // Recipes actions
     GET_ALL_RECIPES,
     GET_RECIPE,
+    GET_RECIPE_REVIEWS,
+    GET_RECIPE_INGREDIENTS,
 } from "./actions"
 //==============================================================================
 
@@ -41,6 +43,14 @@ const GetRecipe = (payload, state) => {
     const { selectedRecipe } = payload;
     return { ...state, selectedRecipe };
 }
+const GetRecipeReviews = (payload, state) => {
+    const { selectedRecipeReviews } = payload;
+    return { ...state, selectedRecipeReviews };
+}
+const GetRecipeIngredients = (payload, state) => {
+    const { selectedRecipeIngredients } = payload;
+    return { ...state, selectedRecipeIngredients };
+}
 
 //////////////////////////////////////////////////////////////
 //                    REDUCER DEFINITION
@@ -61,6 +71,10 @@ export const recipeReducer = (state, action) => {
             return GetAllRecipes(action.payload, state);
         case GET_RECIPE:
             return GetRecipe(action.payload, state);
+        case GET_RECIPE_REVIEWS:
+            return GetRecipeReviews(action.payload, state);
+        case GET_RECIPE_INGREDIENTS:
+            return GetRecipeIngredients(action.payload, state);
         // Default
         default:
             return state;

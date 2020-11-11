@@ -53,79 +53,88 @@ function _Publish() {
 	const [isInputMissing, setIsInputMissing] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);    
 
-    const addRecipeStep = () => {
-      if(isAnyEmpty(newStepText)) {
-        setIsStepInputMissing(true);
-        return;
+  const addRecipeStep = () => {
+    if(isAnyEmpty(newStepText)) {
+      setIsStepInputMissing(true);
+      return;
+    }
+    setIsIngredientInputMissing(false);
+    setIsStepInputMissing(false);
+    // set new steps
+    setRecipeSteps(_.concat(recipeSteps, [newStepText]))
+    setNewRecipeStep("");
+  }
+  const removeStep = (index) => {
+    let modifiedSteps = _.clone(recipeSteps);
+    modifiedSteps.splice(index, 1);
+    setRecipeSteps(modifiedSteps);
+  }
+  const addRecipeIngredient = () => {
+    if(isAnyEmpty(newIngredientName, newIngredientQuantity)) {
+      setIsIngredientInputMissing(true);
+      return;
+    }
+    setIsIngredientInputMissing(false);
+    setIsStepInputMissing(false);
+    // set new ingredients
+    const newIngredient = {
+        name: newIngredientName,
+        quantity: newIngredientQuantity,
+    }
+    setRecipeIngredients(_.concat(recipeIngredients, [newIngredient]))
+    setNewIngredientName("");
+    setNewIngredientQuantity("");
+  }
+  const removeIngredient = (index) => {
+    let modifiedIngredients = _.clone(recipeIngredients);
+    modifiedIngredients.splice(index, 1);
+    setRecipeIngredients(modifiedIngredients);      
+  }    
+  const publishRecipe = () => {
+      if(isAnyEmpty(recipeName, recipeImageUrl, recipeDescription) || _.isEmpty(recipeSteps) || _.isEmpty(recipeIngredients)) {
+          setIsInputMissing(true);
+          return;
       }
-      setIsIngredientInputMissing(false);
-      setIsStepInputMissing(false);
-      // set new steps
-      setRecipeSteps(_.concat(recipeSteps, [newStepText]))
-      setNewRecipeStep("");
-    }
-    const removeStep = (index) => {
-      let modifiedSteps = _.clone(recipeSteps);
-      modifiedSteps.splice(index, 1);
-      setRecipeSteps(modifiedSteps);
-    }
-    const addRecipeIngredient = () => {
-      if(isAnyEmpty(newIngredientName, newIngredientQuantity)) {
-        setIsIngredientInputMissing(true);
-        return;
+      setIsInputMissing(false);
+      setIsLoading(true);
+      // create recipe
+      function cleanForm() {
+        setRecipeName("");
+        setRecipeImageUrl("");
+        setRecipeDescription("");
+        setRecipeSteps([]);
+        setIsLoading(false);
       }
-      setIsIngredientInputMissing(false);
-      setIsStepInputMissing(false);
-      // set new ingredients
-      const newIngredient = {
-          name: newIngredientName,
-          quantity: newIngredientQuantity,
+      const { name:authorName, avatar:authorAvatar, id:authorId } = (context.loggedUser || {});
+      const newRecipe = {
+        name: recipeName, 
+        description: recipeDescription,
+        image: {
+          url: recipeImageUrl,
+          size: 0,
+          type: "image/jpeg",
+          filename: "recipe.jpg",
+        },
+        authorName,
+        authorAvatar,
+        authorId,       
+        steps: recipeSteps,
+        ingredient_keys: _.map(recipeIngredients, ingredient => ingredient.name),
+        avg_rating: 0,
+        total_ratings: 0,
+        total_reviews: 0,
       }
-      setRecipeIngredients(_.concat(recipeIngredients, [newIngredient]))
-      setNewIngredientName("");
-      setNewIngredientQuantity("");
-    }
-    const removeIngredient = (index) => {
-      let modifiedIngredients = _.clone(recipeIngredients);
-      modifiedIngredients.splice(index, 1);
-      setRecipeIngredients(modifiedIngredients);      
-    }    
-    const publishRecipe = () => {
-        if(isAnyEmpty(recipeName, recipeImageUrl, recipeDescription) || _.isEmpty(recipeSteps) || _.isEmpty(recipeIngredients)) {
-            setIsInputMissing(true);
-            return;
-        }
-        setIsInputMissing(false);
-        setIsLoading(true);
-        // create recipe
-        function cleanForm() {
-          setRecipeName("");
-          setRecipeImageUrl("");
-          setRecipeDescription("");
-          setRecipeSteps([]);
-          setIsLoading(false);
-        }
-        const newRecipe = {
-          name: recipeName, 
-          description: recipeDescription,
-          images: recipeImageUrl,
-          steps: recipeSteps,
-          ingredient_keys: _.map(recipeIngredients, ingredient => ingredient.name),
-          avg_rating: 0,
-          total_ratings: 0,
-          total_comments: 0,
-        }
-        context.CreateRecipe(newRecipe, recipeIngredients)
-          .then((newRecipe) => {
-            cleanForm();
-            context.TriggerNotification("success", "Recipe successfully created.")
-            history.push(`/recipe/${_.get(newRecipe, "id")}`);
-          })
-          .catch(() => {
-            cleanForm();
-            context.TriggerNotification("error", "Could not create Recipe.")
-          });
-    }
+      context.CreateRecipe(newRecipe, recipeIngredients)
+        .then((newRecipe) => {
+          cleanForm();
+          context.TriggerNotification("success", "Recipe successfully created.")
+          history.push(`/recipe/${_.get(newRecipe, "id")}`);
+        })
+        .catch(() => {
+          cleanForm();
+          context.TriggerNotification("error", "Could not create Recipe.")
+        });
+  }
     
   return (
     <PublishPage>

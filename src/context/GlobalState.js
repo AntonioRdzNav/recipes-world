@@ -14,6 +14,8 @@ import {
     // Recipes actions
     GET_ALL_RECIPES,
     GET_RECIPE,
+    GET_RECIPE_REVIEWS,
+    GET_RECIPE_INGREDIENTS,
 } from "./actions"; 
 
 import { NotificationManager } from "react-notifications";
@@ -63,8 +65,8 @@ function GlobalState (props) {
       selectedUser: null,
       recipes: [],
       selectedRecipe: null,
-      selectedRecipeComments: [],
-      selectedRecipeSteps: [],        
+      selectedRecipeReviews: [],
+      selectedRecipeIngredients: [],
   });  
 //////////////////////////////////////////////////////////////
 //                      HOOKS
@@ -106,7 +108,7 @@ const TriggerNotification = (type="success", content="", milliseconds) => {
         .collection("users")
         .doc(userId)
         .onSnapshot(docSnapshot => {
-            const user = { ...docSnapshot.data(), id:docSnapshot.uid };
+            const user = { ...docSnapshot.data(), id:docSnapshot.id };
             if(_.get(options, "isGettingLoggedUser")) {
                 dispatcher({ type: GET_LOGGED_USER, payload: { loggedUser: user }});            
             } else {
@@ -195,6 +197,42 @@ const TriggerNotification = (type="success", content="", milliseconds) => {
           dispatcher({ type: GET_RECIPE, payload: { selectedRecipe:recipe }});            
         })            
   };  
+  const GetRecipeReviews = (recipeId) => {
+    // returns suscription (make sure to end it)
+    return firestore
+    .collection("recipes")
+    .doc(recipeId)
+    .collection("reviews")
+    .onSnapshot(collectionSnapshot => {
+      const selectedRecipeReviews = enrichSnapshotWithId(collectionSnapshot);
+          dispatcher({ type: GET_RECIPE_REVIEWS, payload: { selectedRecipeReviews }});            
+        })            
+  };    
+  const CreateRecipeReview = (recipeId, newRecipeReview) => {
+    return new Promise((resolve, reject) => {
+      return firestore
+      .collection("recipes")
+      .doc(recipeId)
+      .collection("reviews")
+      .add({ ...newRecipeReview, createdAt: firebase.firestore.FieldValue.serverTimestamp() })
+      .then((result) => {
+        const reviewId = result.id;
+        resolve({ ...newRecipeReview, id:reviewId });      
+      })
+          .catch(reject);
+    });
+  };
+  const GetRecipeIngredients = (recipeId) => {
+    // returns suscription (make sure to end it)
+    return firestore
+    .collection("recipes")
+    .doc(recipeId)
+    .collection("ingredients")
+    .onSnapshot(collectionSnapshot => {
+      const selectedRecipeIngredients = enrichSnapshotWithId(collectionSnapshot);
+      dispatcher({ type: GET_RECIPE_INGREDIENTS, payload: { selectedRecipeIngredients }});            
+    });
+  };   
   const CreateRecipeIngredientsBatch = (recipeId, ingredients) => {
     return new Promise(async (resolve, reject) => {
       const batch = firestore.batch();
@@ -209,18 +247,6 @@ const TriggerNotification = (type="success", content="", milliseconds) => {
         .catch(reject);
     });
   };
-  // const DeleteRecipeIngredientsBatch = (ingredients) => {
-  //   return new Promise(async (resolve, reject) => {
-  //     const batch = firestore.batch();
-  //     for (const ingredient in ingredients) {
-  //       const ingredientRef = firestore.collection("ingredients").doc(ingredient.id)
-  //       await batch.delete(ingredientRef)
-  //     }
-  //     batch.commit()
-  //       .then(resolve)
-  //       .catch(reject);
-  //   });
-  // };
 
 //////////////////////////////////////////////////////////////
 //                       PROVIDER
@@ -234,7 +260,8 @@ const TriggerNotification = (type="success", content="", milliseconds) => {
         selectedUser: globalState.selectedUser,
         recipes: globalState.recipes,
         selectedRecipe: globalState.selectedRecipe,
-        selectedRecipeComments: globalState.selectedRecipeComments,
+        selectedRecipeReviews: globalState.selectedRecipeReviews,
+        selectedRecipeIngredients: globalState.selectedRecipeIngredients,
         // system actions
         TriggerNotification,
         // account actions
@@ -246,6 +273,9 @@ const TriggerNotification = (type="success", content="", milliseconds) => {
         GetAllRecipes,
         CreateRecipe,
         GetRecipe,
+        GetRecipeReviews,
+        CreateRecipeReview,    
+        GetRecipeIngredients,    
       }}
     >
       {props.children}

@@ -39,3 +39,8 @@ export function enrichSnapshotWithId(querySnapshot) {
     });
     return data;
 }
+
+
+export function convertTimestampToDate(timestamp) {
+    return timestamp && timestamp.toDate && timestamp.toDate();
+}

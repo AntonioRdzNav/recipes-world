@@ -92,6 +92,7 @@ textarea,
 select {
   font: inherit;
 }
+div:focus,
 input:focus,
 button:focus,
 textarea:focus,
