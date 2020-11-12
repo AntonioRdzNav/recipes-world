@@ -137,7 +137,7 @@ function _Publish() {
         });
   }
 
-  if(!context.isLoggedIn) {
+  if(!context.isLoggedIn && context.isLoggedIn!==null) {
     return <Redirect to={LOGIN__ROUTE_PATH} />      
   }
     

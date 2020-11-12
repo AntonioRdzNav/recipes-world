@@ -76,7 +76,7 @@ function _RecipeView() {
   useEffect(() => {
     const loggedInUserId = _.get(context, "loggedUser.id");
     const authorId = _.get(context, "selectedRecipe.authorId");
-    setIsRecipeAuthor(loggedInUserId === authorId);
+    setIsRecipeAuthor((loggedInUserId&&authorId)? loggedInUserId===authorId : false);
   }, [context.loggedUser, context.selectedRecipe])  
 
   const ratingChanged = (newRating) => {
@@ -88,7 +88,7 @@ function _RecipeView() {
       return;
     }
     setIsReviewTextMissing(false);
-    if (!context.isLoggedIn) {
+    if (!context.isLoggedIn && context.isLoggedIn!==null) {
       context.TriggerNotification("warning", "You must Login in order to create a Review");
       return;
     }

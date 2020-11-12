@@ -13,6 +13,8 @@ import RecipeContext from "../../../context/recipe-context";
 
 import { isAnyEmpty, convertTimestampToDate } from "../../../utils/Helpers"
 
+import { AVATAR_PLACEHOLDER } from "../../../data/image-urls";
+
 import {
     ReviewContainer,
     ReviewAuthorData,
@@ -86,7 +88,7 @@ function _Review (props) {
     return (
         <ReviewContainer>
             <ReviewAuthorData>
-              <ReviewAuthorAvatar src={authorAvatar} alt="Review Author Avatar"/>
+              <ReviewAuthorAvatar src={authorAvatar || AVATAR_PLACEHOLDER} alt="Review Author Avatar"/>
               <ReviewAuthorName> {authorName} </ReviewAuthorName>
             </ReviewAuthorData>
             {!isEditingReview && <ReviewText> {text} </ReviewText>}

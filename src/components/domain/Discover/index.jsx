@@ -40,7 +40,8 @@ function _Discover() {
           const { id, image, name, description, avg_rating, total_reviews } = recipe;
           return (
             <RecipeContainer key={id} onClick={() => history.push(`/recipe/${id}`)}>
-              <RecipeImage src={_.get(image, "url")} alt="Recipe Image"/>
+              {!_.get(image, "url") && <div style={{ height:200, width:"100%" }}></div>}
+              {_.get(image, "url") && <RecipeImage src={_.get(image, "url")} alt="Recipe Image"/>}              
               <RecipeName> {name} </RecipeName>
               <RecipeDescription> {description} </RecipeDescription>
               <div style={{ background:"white", padding:"4px", borderRadius:5, marginTop:5 }}>

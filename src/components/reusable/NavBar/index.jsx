@@ -12,10 +12,10 @@ import {
 	UserName,
  } from "./style.js";
 
-import Button from "../Button/index.jsx"
-import ReactMenu from "../ReactMenu/index.jsx"
+import Button from "../Button/index.jsx";
+import ReactMenu from "../ReactMenu/index.jsx";
 
-import RecipeContext from "../../../context/recipe-context"
+import RecipeContext from "../../../context/recipe-context";
 
 import { 
 	DISCOVER__ROUTE_PATH, 
@@ -23,13 +23,14 @@ import {
 	LOGIN__ROUTE_PATH,
 	SIGNUP__ROUTE_PATH
 } from "../../../data/urls"
+import { AVATAR_PLACEHOLDER } from "../../../data/image-urls";
 //==============================================================================
 
 function _NavBar() {
 
-    const context = useContext(RecipeContext);
+  const context = useContext(RecipeContext);
 
-    const { isLoggedIn, loggedUser, Logout, TriggerNotification } = context;
+  const { isLoggedIn, loggedUser, Logout, TriggerNotification } = context;
 
 	const match = useRouteMatch();
 	const history = useHistory();
@@ -63,7 +64,7 @@ function _NavBar() {
 
 		</LinksContainer>
 
-		{!isLoggedIn && !isInAccountUrl && <Button 
+		{!isLoggedIn && isLoggedIn!==null && !isInAccountUrl && <Button 
 			type="white"
 			onClick={() => history.push(LOGIN__ROUTE_PATH)}
 			text="Login"
@@ -73,7 +74,7 @@ function _NavBar() {
 		{isLoggedIn && <ReactMenu 
 			label={
 			<UserData>
-				<UserAvatar src={userAvatar} alt="User Avatar"/>
+				<UserAvatar src={userAvatar || AVATAR_PLACEHOLDER} alt="User Avatar"/>
 				<UserName style={{ color:"white" }}> {_.get(loggedUser, "name")} </UserName>
 			</UserData>			
 			}

@@ -4,7 +4,7 @@ export default React.createContext({
   // System state
     modalParameters: { isOpened: false },
   // Recipe state
-    isLoggedIn: false,
+    isLoggedIn: null,
     loggedUser: null,
     selectedUser: null,
     recipes: [],

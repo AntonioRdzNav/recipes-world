@@ -156,7 +156,7 @@ function _RecipeEdit() {
         });
   }
 
-  if(!context.isLoggedIn) {
+  if(!context.isLoggedIn && context.isLoggedIn!==null) {
     return <Redirect to={LOGIN__ROUTE_PATH} />      
   }
   if(!isAuthor) {

@@ -68,7 +68,7 @@ function GlobalState (props) {
       // system state
       modalParameters: { isOpened: false },
       // recipe state
-      isLoggedIn: false,
+      isLoggedIn: null,
       loggedUser: null,
       selectedUser: null,
       recipes: [],
@@ -85,7 +85,8 @@ function GlobalState (props) {
 //                       EFFECTS
 //////////////////////////////////////////////////////////////
 useEffect(() => {
-  dispatcher({ type: USER_IS_LOGGEDIN, payload: { isLoggedIn: (loggedUser!==null) } });
+  console.log("dev: loggedUser", loggedUser, loadingLoggedUser)
+  !loadingLoggedUser && dispatcher({ type: USER_IS_LOGGEDIN, payload: { isLoggedIn: (loggedUser!==null) } });
   let unsubscribeFromGetUser = null;
   if(loggedUser) {
       unsubscribeFromGetUser = GetUser(loggedUser.uid, { isGettingLoggedUser: true });
@@ -93,7 +94,7 @@ useEffect(() => {
   return () => {
     unsubscribeFromGetUser && unsubscribeFromGetUser();
   }
-}, [loggedUser])       
+}, [loggedUser, loadingLoggedUser])       
 
 
 //////////////////////////////////////////////////////////////
