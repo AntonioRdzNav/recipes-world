@@ -58,7 +58,7 @@ function _Review (props) {
     const ratingChanged = (newRating) => {
       setNewReviewRating(newRating)
     };
-    const createReview = () => {
+    const updateReview = () => {
       if (isAnyEmpty(newReviewText) || newRecipeRating===null) {
         setIsReviewTextMissing(true);
         return;
@@ -74,10 +74,12 @@ function _Review (props) {
         .then(() => {
           setIsEditingReview(false);
           setIsUpdating(false);
+          context.TriggerNotification("success", "Review successfully updated");
         })
         .catch(() => {
           setIsEditingReview(false);
-          setIsUpdating(false);          
+          setIsUpdating(false);    
+          context.TriggerNotification("error", "Could not update review"); 
         })
     }    
 
@@ -152,7 +154,7 @@ function _Review (props) {
             </RatingInput>}
             {isEditingReview && <Button 
               type="warning"
-              onClick={() => createReview()}
+              onClick={() => updateReview()}
               text="Create Review"
               style={{ width:"100%" }}				
             />}            

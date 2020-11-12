@@ -30,7 +30,7 @@ service cloud.firestore {
           allow read: if true; // everyone can read
           allow create: if isSignedIn();
           allow update: if isSignedIn() && userOwnsDocument(getIncomingData().authorId);
-          allow delete: if isSignedIn() && userOwnsDocument(getIncomingData().authorId);
+          allow delete: if isSignedIn() && userOwnsDocument(getExistingData().authorId);
         }
         //////////////////////////////////////////////////////////////
         //                 INGREDIENTS SUB-COLLECTION
@@ -76,9 +76,9 @@ service cloud.firestore {
     	return request.resource.data
     }   
 // This Data is already saved in the database
-    // function getExistingData() {
-    // 	return resource.data
-    // }    
+    function getExistingData() {
+    	return resource.data
+    }    
 
     // function isExistingDataLocked() {
     // 	return getExistingData().locked
