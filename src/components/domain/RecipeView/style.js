@@ -32,8 +32,9 @@ export const RecipeMainInformation = styled.div`
     align-items: flex-start;    
 `
 export const RecipeImage = styled.img`
-    width: 100%;
-    height: auto;
+    max-height: 300px;
+    height: 100%;
+    width: auto;
     margin: 0 auto;
     margin-bottom: 10px;
 `

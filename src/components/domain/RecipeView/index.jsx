@@ -112,7 +112,8 @@ function _RecipeView() {
   return (
     <RecipeView>
 			<RecipeMainInformation>
-				<RecipeImage src={_.get(image, "url")} alt="Recipe Image"/>
+				{!_.get(image, "url") && <div style={{ height:300, width:"100%" }}></div>}
+        {_.get(image, "url") && <RecipeImage src={_.get(image, "url")} alt="Recipe Image"/>}
 				<RecipeName> {recipeName} </RecipeName>
 				<RecipeDescription> {description} </RecipeDescription>
         <div style={{ alignSelf:"flex-end",display:"flex",justifyContent:"flex-start",alignItems:"center" }}>

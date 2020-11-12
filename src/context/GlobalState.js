@@ -53,8 +53,8 @@ const auth = firebase.auth()
 const firestore = firebase.firestore()
 
 if(window.location.hostname === 'localhost') {
-	firestore.useEmulator("localhost", 8080)
-	auth.useEmulator("http://localhost:9099/")
+	// firestore.useEmulator("localhost", 8080)
+	// auth.useEmulator("http://localhost:9099/")
 }
 //==============================================================================
 
