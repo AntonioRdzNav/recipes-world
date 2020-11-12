@@ -57,8 +57,9 @@ export const RecipeContainer = styled.div`
 `
 
 export const RecipeImage = styled.img`
-    width: 100%;
-    height: auto;
+    max-height: 200px;
+    height: 100%;
+    width: auto;
     margin-bottom: 10px;
 `
 
