@@ -374,7 +374,10 @@ const ToggleModal = (modalParameters) => {
         const ingredientRef = firestore
           .collection("recipes").doc(recipeId)
           .collection("ingredients").doc();
-        await batch.set(ingredientRef, ingredient);
+        await batch.set(ingredientRef, {
+            ...ingredient,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          });
       }
       batch.commit()
         .then(resolve)

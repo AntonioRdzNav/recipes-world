@@ -39,7 +39,7 @@ service cloud.firestore {
           allow read: if true; // everyone can read
           allow create: if isSignedIn() && userOwnsRecipe() && wasDocumentCreatedThroughBatchWrite(ingredientId);
           allow update: if false; // no current way of updating ingredients
-          allow delete: if isSignedIn() && userOwnsRecipe() && wasDocumentCreatedThroughBatchWrite(ingredientId);
+          allow delete: if isSignedIn() && userOwnsRecipe();
         }
         function getRecipeAuthorId() {
           return get(/databases/$(database)/documents/recipes/$(recipeId)).data.authorId;
@@ -76,9 +76,9 @@ service cloud.firestore {
     	return request.resource.data
     }   
 // This Data is already saved in the database
-    function getExistingData() {
-    	return resource.data
-    }    
+    // function getExistingData() {
+    // 	return resource.data
+    // }    
 
     // function isExistingDataLocked() {
     // 	return getExistingData().locked
