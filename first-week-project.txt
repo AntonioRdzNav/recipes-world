@@ -1,0 +1,81 @@
+
+
+DONE: Firebase Auth: 
+
+
+DONE: Cloud Firestore: 
+
+    database: 
+        //users//:
+            user_1
+            user_2:
+                name: str
+                email: str
+                allergies: []
+                avatar: str
+        //recipes//:
+            recipe_1
+            recipe_2
+                authorName: str,
+                authorAvatar: str,
+                authorId: str
+                name: str
+                description: str
+                image: {
+                  url:
+                  size:
+                  type:
+                  filename:
+                }
+                steps: []
+                ingredient_keys: []
+                avg_rating: num
+                total_ratings: num
+                //reviews//:
+                    review_1
+                    review_2
+                        text: str
+                        rating: num
+                        authorId: str
+                        authorAvatar: str
+                        authorName: str
+                //ingredients//:
+                    ingredient_1
+                    ingredient_2:
+                        name: str
+                        image: str
+                        quantity: str
+    
+
+
+DONE: Security rules
+
+    - add necessary security rules
+    - max number of ingredients to add (40 maybe)
+    - make sure ingredients can only be (added) and (deleted) atomically using getAfter()
+    - who can read, create, edit, delete things: 
+
+
+
+DONE: Cloud Functions
+
+    - when a new (rating) is added, (avg_rating) of that recipe is recalculated and (total_ratings) is incremented or decremented
+
+
+
+DONE: Hosting
+
+    - deploy app using firebase
+
+
+
+NOTE: Storage
+
+    - (users) avatar
+    - (recipes) images
+    - (recipe_steps) image
+    - (ingredients) image
+
+
+
+NOTE: A/B Testing
