@@ -32,25 +32,28 @@ function _Discover() {
   return (
     <Discover>
       <Filters>
-        Filters
+        
       </Filters>
       <Recipes>
 
         {_.map(context.recipes, (recipe) => {
-          const { id, image, name, description, avg_rating } = recipe;
+          const { id, image, name, description, avg_rating, total_reviews } = recipe;
           return (
             <RecipeContainer key={id} onClick={() => history.push(`/recipe/${id}`)}>
               <RecipeImage src={_.get(image, "url")} alt="Recipe Image"/>
               <RecipeName> {name} </RecipeName>
               <RecipeDescription> {description} </RecipeDescription>
-              <StarRatings
-                starDimension="19px"
-                starSpacing="2px"
-                rating={avg_rating}
-                starRatedColor={window.colors["app__rateStarColor"]}
-                numberOfStars={5}
-                name='rating'
-              />                  
+              <div style={{ background:"white", padding:"4px", borderRadius:5, marginTop:5 }}>
+                <StarRatings
+                  starDimension="19px"
+                  starSpacing="2px"
+                  rating={avg_rating}
+                  starRatedColor={window.colors["app__rateStarColor"]}
+                  numberOfStars={5}
+                  name='rating'
+                />  
+                <span style={{ marginLeft:5,fontSize:14 }}> {`(${total_reviews || 0})`} </span>                                
+              </div>
             </RecipeContainer>
           )
         })}

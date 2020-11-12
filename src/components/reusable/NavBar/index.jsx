@@ -29,7 +29,7 @@ function _NavBar() {
 
     const context = useContext(RecipeContext);
 
-    const { isLoggedIn, loggedUser, Logout } = context;
+    const { isLoggedIn, loggedUser, Logout, TriggerNotification } = context;
 
 	const match = useRouteMatch();
 	const history = useHistory();
@@ -42,7 +42,11 @@ function _NavBar() {
     const menuOptions = [
         {
             label: "Logout",
-            onClick: Logout,
+            onClick: () => {
+              Logout()
+                .then(() => TriggerNotification("info", "Goodbye!"))
+                .catch((error) => TriggerNotification("info", error.message))
+            },
         }
     ]    
 

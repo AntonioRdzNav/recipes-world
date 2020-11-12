@@ -50,9 +50,9 @@ function _Login() {
             cleanForm();
             context.TriggerNotification("info", `Welcome back!`, 2000)
           })
-          .catch(() => {
+          .catch((error) => {
             cleanForm();
-            context.TriggerNotification("error", `Could not Log in`)
+            context.TriggerNotification("error", error.message)
           });
     }       
 

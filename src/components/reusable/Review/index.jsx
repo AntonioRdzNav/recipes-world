@@ -40,9 +40,11 @@ function _Review (props) {
     const [isEditingReview, setIsEditingReview] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
 
-    const { authorAvatar, authorName, text, rating, createdAt, reviewId, recipeId } = props;
+    const { loggedUserId, authorAvatar, authorName, text } = props;
+    const { rating, createdAt, reviewId, reviewAuthorId, recipeId } = props;
 
     const createdAtDate = convertTimestampToDate(createdAt);
+    const isReviewAuthor = (loggedUserId && reviewAuthorId)? loggedUserId === reviewAuthorId : false;
 
     useEffect(() => {
       setNewReviewRating(rating);
@@ -70,14 +72,10 @@ function _Review (props) {
       }
       context.UpdateRecipeReview(recipeId, reviewId, updatedRecipeReview)
         .then(() => {
-          setNewReviewText("");
-          setNewReviewRating(null);
           setIsEditingReview(false);
           setIsUpdating(false);
         })
         .catch(() => {
-          setNewReviewText("");
-          setNewReviewRating(null);
           setIsEditingReview(false);
           setIsUpdating(false);          
         })
@@ -86,8 +84,8 @@ function _Review (props) {
     return (
         <ReviewContainer>
             <ReviewAuthorData>
-                <ReviewAuthorAvatar src={authorAvatar} alt="Review Author Avatar"/>
-                <ReviewAuthorName> {authorName} </ReviewAuthorName>
+              <ReviewAuthorAvatar src={authorAvatar} alt="Review Author Avatar"/>
+              <ReviewAuthorName> {authorName} </ReviewAuthorName>
             </ReviewAuthorData>
             {!isEditingReview && <ReviewText> {text} </ReviewText>}
             {!isEditingReview && <ReviewAdditionalData>
@@ -101,12 +99,12 @@ function _Review (props) {
                 name='rating'
               />        
             </ReviewAdditionalData>}
-            {!isEditingReview && <EditIcon onClick={() => {
+            {isReviewAuthor && !isEditingReview && <EditIcon onClick={() => {
               setIsEditingReview(!isEditingReview);
             }}>
               <FontAwesomeIcon icon={faEdit} />
             </EditIcon>}
-            {!isEditingReview && <RemoveIcon 
+            {isReviewAuthor && !isEditingReview && <RemoveIcon 
               onClick={() => {
                 context.ToggleModal({
                   title: "Do you want to delete this Review?",

@@ -60,6 +60,7 @@ function _RecipeView() {
   // UX
   const [isReviewTextMissing, setIsReviewTextMissing] = useState(false);
   const [isViewingIngredients, setIsViewingIngredients] = useState(true);
+  const [isRecipeAuthor, setIsRecipeAuthor] = useState(false);
 
   useEffect(() => {
     const unsubscribeFromGetRecipe = context.GetRecipe(recipeId);
@@ -72,6 +73,12 @@ function _RecipeView() {
     }
   }, [])  
 
+  useEffect(() => {
+    const loggedInUserId = _.get(context, "loggedUser.id");
+    const authorId = _.get(context, "selectedRecipe.authorId");
+    setIsRecipeAuthor(loggedInUserId === authorId);
+  }, [context.loggedUser, context.selectedRecipe])  
+
   const ratingChanged = (newRating) => {
 		setNewReviewRating(newRating)
   };
@@ -80,8 +87,12 @@ function _RecipeView() {
       setIsReviewTextMissing(true);
       return;
     }
-    const { avatar, name:username, id:userId } = (context.loggedUser || {});
     setIsReviewTextMissing(false);
+    if (!context.isLoggedIn) {
+      context.TriggerNotification("warning", "You must Login in order to create a Review");
+      return;
+    }
+    const { avatar, name:username, id:userId } = (context.loggedUser || {});
     // Create recipe review
 		const newRecipeReview = {
       text: newReviewText,
@@ -128,7 +139,7 @@ function _RecipeView() {
                 {moment(convertTimestampToDate(createdAt)).format('MMMM Do YYYY, h:mm a')}
               </RecipeAuthorUsername>
 					</RecipeDate>
-          <ButtonsContainer>
+          {isRecipeAuthor && <ButtonsContainer>
             <Button 
               type="warning"
               onClick={() => history.push(`/recipe/${recipeId}/edit`)}
@@ -157,7 +168,7 @@ function _RecipeView() {
               text="Delete"			
               style={{ marginLeft:15, marginRight:20 }}
             />            
-          </ButtonsContainer>          
+          </ButtonsContainer>}       
 			</RecipeMainInformation>
       
       <RecipeDetails>
@@ -215,15 +226,18 @@ function _RecipeView() {
           />
         </ReviewStickyContainer>
 				{_.map(context.selectedRecipeReviews, (review) => {
-					const { id, authorAvatar, authorName:reviewAuthorName, text, rating, createdAt } = review;
+          const { id, authorAvatar, authorName:reviewAuthorName } = review;
+          const { text, rating, createdAt, authorId } = review;
 					return <RecipeReview 
 						key={id}
+						loggedUserId={_.get(context, "loggedUser.id")}
 						authorAvatar={authorAvatar}
 						authorName={reviewAuthorName}
 						text={text}
 						rating={rating}
             createdAt={createdAt}
             reviewId={id}
+            reviewAuthorId={authorId}
             recipeId={recipeId}
 					/>			
 				})}

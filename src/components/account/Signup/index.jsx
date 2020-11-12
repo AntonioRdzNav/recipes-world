@@ -52,9 +52,9 @@ function _Signup() {
             cleanForm();
             context.TriggerNotification("success", `Welcome ${name}!`)
           })
-          .catch(() => {
+          .catch((error) => {
             cleanForm();
-            context.TriggerNotification("error", "Could not Sign up.")
+            context.TriggerNotification("error", error.message)
           });        
     }    
 

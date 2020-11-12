@@ -1,6 +1,6 @@
 //==============================================================================
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Redirect } from 'react-router-dom';
 import _ from "lodash";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -8,9 +8,11 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Input from "../../reusable/Input/index.jsx";
 import Button from "../../reusable/Button/index.jsx";
 
-import RecipeContext from "../../../context/recipe-context"
+import RecipeContext from "../../../context/recipe-context";
 
-import { isAnyEmpty } from "../../../utils/Helpers"
+import { LOGIN__ROUTE_PATH } from "../../../data/urls"
+
+import { isAnyEmpty } from "../../../utils/Helpers";
 
 import {
     PublishPage,
@@ -54,6 +56,7 @@ function _RecipeEdit() {
   // UX
 	const [isInputMissing, setIsInputMissing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);    
+  const [isAuthor, setIsAuthor] = useState(true);    
   
   useEffect(() => {
     context.GetRecipeOnce(recipeId)
@@ -70,6 +73,11 @@ function _RecipeEdit() {
       });
   }, []);
 
+  useEffect(() => {
+    const loggedInUserId = _.get(context, "loggedUser.id");
+    const authorId = _.get(context, "selectedRecipe.authorId");
+    setIsAuthor( (!_.isEmpty(loggedInUserId) && !_.isEmpty(authorId))? loggedInUserId===authorId : true );    
+  }, [context.loggedUser, context.selectedRecipe])
 
   const addRecipeStep = () => {
     if(isAnyEmpty(newStepText)) {
@@ -147,7 +155,14 @@ function _RecipeEdit() {
           context.TriggerNotification("error", "Could not update the Recipe.")
         });
   }
-    
+
+  if(!context.isLoggedIn) {
+    return <Redirect to={LOGIN__ROUTE_PATH} />      
+  }
+  if(!isAuthor) {
+    return <Redirect to={`/recipe/${recipeId}`} />      
+  }  
+  
   return (
     <PublishPage>
       <BackLink

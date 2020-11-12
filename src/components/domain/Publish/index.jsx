@@ -1,6 +1,6 @@
 //==============================================================================
 import React, { useState, useContext } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import _ from "lodash";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -8,9 +8,11 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Input from "../../reusable/Input/index.jsx";
 import Button from "../../reusable/Button/index.jsx";
 
-import RecipeContext from "../../../context/recipe-context"
+import RecipeContext from "../../../context/recipe-context";
 
-import { isAnyEmpty } from "../../../utils/Helpers"
+import { isAnyEmpty } from "../../../utils/Helpers";
+
+import { LOGIN__ROUTE_PATH } from "../../../data/urls";
 
 import {
     PublishPage,
@@ -133,6 +135,10 @@ function _Publish() {
           cleanForm();
           context.TriggerNotification("error", "Could not create the Recipe.")
         });
+  }
+
+  if(!context.isLoggedIn) {
+    return <Redirect to={LOGIN__ROUTE_PATH} />      
   }
     
   return (

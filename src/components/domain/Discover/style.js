@@ -13,10 +13,11 @@ export const Discover = styled.div`
 
 export const Filters = styled.div`
     width: 100%;
-    background-color: lightblue;
+    background-color: ${() => window.colors["app__lightblue"]};
     padding: 10px 20px;
     margin-bottom: 20px;
     min-height: 150px;
+    border-radius: 10px;
     /* flex */
     display: flex;
     flex-direction: row;
@@ -62,6 +63,8 @@ export const RecipeImage = styled.img`
 `
 
 export const RecipeName = styled.div`
+    font-weight: 600;
+    font-size: 16;
     /* truncate text */
     white-space: nowrap;
     overflow: hidden;

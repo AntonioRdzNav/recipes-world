@@ -35,7 +35,7 @@ export const RecipeImage = styled.img`
     width: 100%;
     height: auto;
     margin: 0 auto;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 `
 export const RecipeName = styled.div`
     font-weight: 800;
