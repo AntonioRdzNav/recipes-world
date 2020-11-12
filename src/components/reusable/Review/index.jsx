@@ -95,7 +95,7 @@ function _Review (props) {
             {!isEditingReview && <ReviewAdditionalData>
               <ReviewDate> {moment(createdAtDate).format('MMMM Do YYYY, h:mm a')} </ReviewDate>
               <StarRatings
-                starDimension="17px"
+                starDimension="15px"
                 starSpacing="0px"
                 rating={rating}
                 starRatedColor={window.colors["app__rateStarColor"]}

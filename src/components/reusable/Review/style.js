@@ -38,7 +38,7 @@ export const ReviewText = styled.div`
 `
 export const ReviewDate = styled.div`
     font-weight: 100;
-    font-size: 11px;
+    font-size: 9px;
 `
 export const ReviewAdditionalData = styled.div`
     width: 100%;
