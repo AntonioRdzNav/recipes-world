@@ -157,7 +157,7 @@ function _Review (props) {
             {isEditingReview && <Button 
               type="warning"
               onClick={() => updateReview()}
-              text="Create Review"
+              text="Update Review"
               style={{ width:"100%" }}				
             />}            
 
