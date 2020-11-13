@@ -10,8 +10,8 @@ service cloud.firestore {
     match /users/{userId} {
     	allow read: if isSignedIn() && userOwnsDocument(userId);
       allow create: if isSignedIn();
-      allow update: if false; // there are currently no WRITEs to users documents
-      allow delete: if false; // there are currently no WRITEs to users documents
+      allow update: if false; // there are currently no UPDATE to users documents from clientSide
+      allow delete: if false; // there are currently no DELETE to users documents from clientSide
     }
     //////////////////////////////////////////////////////////////
     //                    RECIPES COLLECTION
@@ -38,7 +38,7 @@ service cloud.firestore {
         match /ingredients/{ingredientId} {
           allow read: if true; // everyone can read
           allow create: if isSignedIn() && userOwnsRecipe() && wasDocumentCreatedThroughBatchWrite(ingredientId);
-          allow update: if false; // no current way of updating ingredients
+          allow update: if false; // no current way of updating ingredients from clientSide
           allow delete: if isSignedIn() && userOwnsRecipe();
         }
         function getRecipeAuthorId() {
